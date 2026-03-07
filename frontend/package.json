@@ -1,0 +1,16 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "browser-sync start --server --files '*.html, *.css'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Frontend for CleanRide Carwash Booking System",
+  "devDependencies": {
+    "browser-sync": "^3.0.4"
+  }
+}
