@@ -40,12 +40,12 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private BookingStatus status = BookingStatus.PENDING;
+    private BookingStatus status = BookingStatus.CONFIRMED;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     
     public enum BookingStatus {
-        PENDING, ACTIVE, COMPLETED, CANCELLED
+        PENDING, ACTIVE, CONFIRMED, COMPLETED, CANCELLED
     }
 }

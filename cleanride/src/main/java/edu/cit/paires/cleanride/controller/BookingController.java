@@ -61,7 +61,7 @@ public class BookingController {
         }
         
         booking.setBayId(assignedBay);
-        booking.setStatus(Booking.BookingStatus.PENDING);
+        booking.setStatus(Booking.BookingStatus.CONFIRMED);
         booking.setServiceType(request.getServiceType());
         booking.setVehicleType(request.getVehicleType());
         booking.setTotalPrice(request.getTotalPrice());
@@ -88,7 +88,7 @@ public class BookingController {
     }
 
     @GetMapping("/daily")
-    public ResponseEntity<List<SlotDetailResponse>> getDailySlots(@RequestParam String date) {
+    public ResponseEntity<List<SlotDetailResponse>> getDailySlots(@RequestParam("date") String date) {
         LocalDate parsedDate = LocalDate.parse(date);
             List<Booking> dailyBookings = bookingRepository.findByBookingDate(parsedDate);
 
@@ -127,7 +127,7 @@ public class BookingController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<UserBookingResponse>> getUserBookings(@PathVariable Long userId) {
+    public ResponseEntity<List<UserBookingResponse>> getUserBookings(@PathVariable("userId") Long userId) {
         List<Booking> bookings = bookingRepository.findByUserIdOrderByBookingDateDesc(userId);
         
         List<UserBookingResponse> responses = bookings.stream().map(b -> {
@@ -145,5 +145,47 @@ public class BookingController {
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(responses);
+    }
+
+    @PostMapping("/{bookingId}/cancel")
+    public ResponseEntity<?> cancelBooking(@PathVariable("bookingId") Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null) {
+            return new ResponseEntity<>("Booking not found", HttpStatus.NOT_FOUND);
+        }
+
+        if (booking.getStatus() == Booking.BookingStatus.CANCELLED) {
+            return new ResponseEntity<>("Booking is already cancelled", HttpStatus.BAD_REQUEST);
+        }
+        if (booking.getStatus() == Booking.BookingStatus.COMPLETED) {
+            return new ResponseEntity<>("Completed booking cannot be cancelled", HttpStatus.BAD_REQUEST);
+        }
+
+        int slotMap = booking.getTimeSlot();
+        int hours = 0;
+        int mins = 0;
+        switch(slotMap) {
+            case 1 -> { hours = 8; mins = 0; }
+            case 2 -> { hours = 9; mins = 30; }
+            case 3 -> { hours = 11; mins = 0; }
+            case 4 -> { hours = 12; mins = 30; }
+            case 5 -> { hours = 14; mins = 0; }
+            case 6 -> { hours = 15; mins = 30; }
+            case 7 -> { hours = 17; mins = 0; }
+            case 8 -> { hours = 18; mins = 30; }
+            case 9 -> { hours = 20; mins = 0; }
+        }
+        
+        java.time.LocalDateTime scheduledTime = java.time.LocalDateTime.of(booking.getBookingDate(), java.time.LocalTime.of(hours, mins));
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        
+        if (now.isAfter(scheduledTime.minusHours(1))) {
+            return new ResponseEntity<>("Cannot cancel within 1 hour of the scheduled time", HttpStatus.BAD_REQUEST);
+        }
+
+        booking.setStatus(Booking.BookingStatus.CANCELLED);
+        bookingRepository.save(booking);
+
+        return ResponseEntity.ok("Booking successfully cancelled");
     }
 }

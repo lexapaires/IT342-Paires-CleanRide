@@ -1,0 +1,138 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< edu.cit.paires:cleanride >----------------------
+[INFO] Building cleanride 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ cleanride ---
+[INFO] Deleting /Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride/target
+[INFO] 
+[INFO] >>> spring-boot:3.5.11:run (default-cli) > test-compile @ cleanride >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ cleanride ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ cleanride ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 11 source files with javac [debug parameters release 17] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ cleanride ---
+[INFO] skip non existing resourceDirectory /Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ cleanride ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.5.11:run (default-cli) < test-compile @ cleanride <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.11:run (default-cli) @ cleanride ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.11)
+
+2026-03-19T13:28:19.896+08:00  INFO 29503 --- [           main] e.c.p.cleanride.CleanrideApplication     : Starting CleanrideApplication using Java 23.0.1 with PID 29503 (/Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride/target/classes started by alexa in /Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride)
+2026-03-19T13:28:19.901+08:00  INFO 29503 --- [           main] e.c.p.cleanride.CleanrideApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-03-19T13:28:21.029+08:00  INFO 29503 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-19T13:28:21.111+08:00  INFO 29503 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 67 ms. Found 2 JPA repository interfaces.
+2026-03-19T13:28:22.414+08:00  INFO 29503 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2026-03-19T13:28:22.434+08:00  INFO 29503 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-19T13:28:22.434+08:00  INFO 29503 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026-03-19T13:28:22.505+08:00  INFO 29503 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-19T13:28:22.506+08:00  INFO 29503 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2426 ms
+2026-03-19T13:28:22.532+08:00 DEBUG 29503 --- [           main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: springSecurityFilterChain urls=[/*] order=-100, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2026-03-19T13:28:22.532+08:00 DEBUG 29503 --- [           main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
+2026-03-19T13:28:22.712+08:00  INFO 29503 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-19T13:28:22.772+08:00  INFO 29503 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.42.Final
+2026-03-19T13:28:22.808+08:00  INFO 29503 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-19T13:28:23.291+08:00  INFO 29503 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-19T13:28:23.329+08:00  INFO 29503 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-19T13:28:24.652+08:00  INFO 29503 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5341e71a
+2026-03-19T13:28:24.654+08:00  INFO 29503 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-19T13:28:24.814+08:00  WARN 29503 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-19T13:28:25.075+08:00  INFO 29503 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.6
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-19T13:28:26.271+08:00  INFO 29503 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-19T13:28:27.198+08:00  INFO 29503 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-19T13:28:27.627+08:00  WARN 29503 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-19T13:28:27.665+08:00 TRACE 29503 --- [           main] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration$WebSecurityEnablerConfiguration=org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration$WebSecurityEnablerConfiguration@1c24639e}
+2026-03-19T13:28:27.674+08:00  WARN 29503 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: a36c4ab5-59bd-4917-9b4c-f90a177f08b1
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-03-19T13:28:27.684+08:00  INFO 29503 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-03-19T13:28:27.848+08:00 DEBUG 29503 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
+2026-03-19T13:28:27.932+08:00 DEBUG 29503 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-03-19T13:28:27.970+08:00 DEBUG 29503 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-19T13:28:28.026+08:00 DEBUG 29503 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-03-19T13:28:28.075+08:00 DEBUG 29503 --- [           main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-03-19T13:28:28.227+08:00  INFO 29503 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8081 (http) with context path '/'
+2026-03-19T13:28:28.236+08:00  INFO 29503 --- [           main] e.c.p.cleanride.CleanrideApplication     : Started CleanrideApplication in 9.396 seconds (process running for 10.256)
+2026-03-19T13:28:34.074+08:00  INFO 29503 --- [nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-19T13:28:34.075+08:00  INFO 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-19T13:28:34.075+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-03-19T13:28:34.075+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-03-19T13:28:34.076+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-03-19T13:28:34.077+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@363d29dd
+2026-03-19T13:28:34.078+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@69f55ea
+2026-03-19T13:28:34.079+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-03-19T13:28:34.079+08:00  INFO 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-03-19T13:28:34.127+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'filterChain' in [class path resource [edu/cit/paires/cleanride/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, ExceptionTranslation, Authorization] (1/1)
+2026-03-19T13:28:34.128+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/v1/bookings/daily?date=2026-03-19
+2026-03-19T13:28:34.132+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2026-03-19T13:28:34.138+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2026-03-19T13:28:34.150+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2026-03-19T13:28:34.152+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2026-03-19T13:28:34.155+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/11)
+2026-03-19T13:28:34.157+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (6/11)
+2026-03-19T13:28:34.158+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2026-03-19T13:28:34.158+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (7/11)
+2026-03-19T13:28:34.175+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.s.w.s.HttpSessionRequestCache        : matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+2026-03-19T13:28:34.176+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (8/11)
+2026-03-19T13:28:34.177+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (9/11)
+2026-03-19T13:28:34.178+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2026-03-19T13:28:34.178+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2026-03-19T13:28:34.180+08:00 TRACE 29503 --- [nio-8081-exec-1] estMatcherDelegatingAuthorizationManager : Authorizing GET /api/v1/bookings/daily?date=2026-03-19
+2026-03-19T13:28:34.183+08:00 TRACE 29503 --- [nio-8081-exec-1] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /api/v1/bookings/daily?date=2026-03-19 using org.springframework.security.authorization.SingleResultAuthorizationManager@18571be6
+2026-03-19T13:28:34.184+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/v1/bookings/daily?date=2026-03-19
+2026-03-19T13:28:34.188+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/v1/bookings/daily?date=2026-03-19", parameters={masked}
+2026-03-19T13:28:34.193+08:00 DEBUG 29503 --- [nio-8081-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to edu.cit.paires.cleanride.controller.BookingController#getDailySlots(String)
+Hibernate: select b1_0.id,b1_0.bay_id,b1_0.booking_date,b1_0.created_at,b1_0.priority_number,b1_0.service_type,b1_0.status,b1_0.time_slot,b1_0.total_price,b1_0.user_id,b1_0.vehicle_type from bookings b1_0 where b1_0.booking_date=?
+2026-03-19T13:28:34.767+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-19T13:28:34.771+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[SlotDetailResponse(timeSlot=1, occupiedCount=0, bayDetails=[SlotDetailResponse.BayDetail(bayId=1, b (truncated)...]
+2026-03-19T13:28:34.981+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-19T13:28:34.985+08:00 DEBUG 29503 --- [nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-19T13:28:34.986+08:00 TRACE 29503 --- [nio-8081-exec-1] w.c.HttpSessionSecurityContextRepository : No HttpSession currently exists
+2026-03-19T13:28:34.986+08:00 TRACE 29503 --- [nio-8081-exec-1] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-03-19T13:28:34.986+08:00 TRACE 29503 --- [nio-8081-exec-1] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-03-19T13:28:34.988+08:00 TRACE 29503 --- [nio-8081-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  04:34 min
+[INFO] Finished at: 2026-03-19T13:32:35+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.5.11:run (default-cli) on project cleanride: Process terminated with exit code: 137 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
