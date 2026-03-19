@@ -38,9 +38,13 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+        if ("cradmin@gmail.com".equals(loginRequest.getEmail()) && "cladmin123".equals(loginRequest.getPassword())) {
+            return ResponseEntity.ok("ADMIN_LOGIN_SUCCESS");
+        }
+
         return userRepository.findByEmail(loginRequest.getEmail())
                 .filter(user -> passwordEncoder.matches(loginRequest.getPassword(), user.getPassword()))
-                .map(user -> ResponseEntity.ok("Login successful!")) // Later you will return a JWT here
+                .map(user -> ResponseEntity.ok().body((Object) user))
                 .orElse(new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED));
     }
 }

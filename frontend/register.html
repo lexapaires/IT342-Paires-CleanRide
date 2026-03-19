@@ -2,28 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>CleanRide - Register</title>
 </head>
 <body>
-<div class="container">
-    <h2>Create an Account</h2>
-    <form id="registerForm">
-        <input type="text" id="firstName" placeholder="First Name" required>
-        <input type="text" id="lastName" placeholder="Last Name" required>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <input type="date" id="birthdate" required>
-        <button type="submit">Register</button>
-    </form>
-    <p style="text-align: center; margin-top: 15px;">
-        Already have an account? <br>
-        <button onclick="window.location.href='index.html'" style="background-color: #6c757d;">Login here</button>
-    </p>
-</div>
+    <!-- Animated background bubbles -->
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+    <div class="bubble bubble-3"></div>
 
-<script>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-wrapper">
+                <img src="LOGO.png" alt="CleanRide Logo" class="logo-icon">
+            </div>
+            <h2>Join CleanRide</h2>
+            <p class="subtitle">Create your account today.</p>
+        </div>
+        
+        <form id="registerForm">
+            <div class="input-row">
+                <div class="input-group">
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                </div>
+            </div>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <input type="date" id="birthdate" required title="Birthdate">
+            </div>
+            <button type="submit">Create Account</button>
+        </form>
+        
+        <div class="link-container">
+            <p>Already have an account?</p>
+            <button class="link-btn" onclick="window.location.href='index.html'" type="button">Log In Here</button>
+        </div>
+    </div>
+
+    <script>
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const userData = {

@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>CleanRide - Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CleanRide - Login</title>
 </head>
 <body>
-<div class="container">
-  <h2>CleanRide Login</h2>
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="Email Address" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button type="submit">Log In</button>
-  </form>
-  <p style="text-align: center; margin-top: 15px;">
-    Don't have an account? <br>
-    <button onclick="window.location.href='register.html'" style="background-color: #6c757d; margin-top: 10px;">Register here</button>
-  </p>
-</div>
+    <!-- Animated background bubbles -->
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+    <div class="bubble bubble-3"></div>
 
-<script>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-wrapper">
+                <img src="LOGO.png" alt="CleanRide Logo" class="logo-icon">
+            </div>
+            <h2>CleanRide</h2>
+            <p class="subtitle">Welcome back! Please login.</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit">Log In</button>
+        </form>
+        
+        <div class="link-container">
+            <p>Don't have an account?</p>
+            <button class="link-btn" onclick="window.location.href='register.html'" type="button">Create an Account</button>
+        </div>
+    </div>
+
+    <script>
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const loginData = {
@@ -34,8 +51,17 @@
                     body: JSON.stringify(loginData)
                 });
                 if (response.ok) {
-                    alert("Login Successful!");
-                    window.location.href = 'dashboard.html';
+                    const result = await response.text();
+                    if (result === "ADMIN_LOGIN_SUCCESS") {
+                        alert("Admin Login Successful!");
+                        window.location.href = 'admin_dashboard.html';
+                    } else {
+                        // The backend now returns the User JSON object
+                        const userData = JSON.parse(result);
+                        localStorage.setItem('userProfile', JSON.stringify(userData));
+                        alert("Login Successful!");
+                        window.location.href = 'dashboard.html';
+                    }
                 } else {
                     const result = await response.text();
                     alert("Error: " + result);

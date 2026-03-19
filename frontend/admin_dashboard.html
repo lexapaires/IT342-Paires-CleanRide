@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CleanRide - Dashboard</title>
+    <title>CleanRide - Admin Dashboard</title>
     <!-- We keep the main style for some global overrides if necessary but heavily rely on dashboard.css -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="dashboard.css">
@@ -23,16 +23,19 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="brand-placeholder">
-            <div class="brand-logo"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
-            CleanRide
+            <div class="brand-logo" style="background: linear-gradient(135deg, #10b981, #059669);"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            CleanRide <span style="font-size: 10px; background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 4px; margin-left: 4px;">ADMIN</span>
         </div>
         
         <div class="nav-section">
-            <div class="nav-title">Main Menu</div>
+            <div class="nav-title">Management</div>
             <a href="#" class="nav-link">Overview</a>
             <a href="#" class="nav-link active">Booking Calendar</a>
-            <a href="my_bookings.html" class="nav-link">My Bookings</a>
-            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="#" class="nav-link">Bay Management</a>
+            <a href="#" class="nav-link">Staff</a>
+            <a href="#" class="nav-link">Reports</a>
+            <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px;"></div>
+            <a href="#" class="nav-link" style="color: #ef4444; font-weight: 600;" onclick="logoutAdmin(event)">Log out</a>
         </div>
 
         <div class="sidebar-calendar" id="sidebarCalendarContainer">
@@ -44,12 +47,12 @@
     <main class="main-content">
         <div class="header">
             <div class="header-title">
-                <h1>5-Bay Slot Picker</h1>
-                <p>Select an available time slot below to secure your carwash booking.</p>
+                <h1>5-Bay Slot Picker <span style="font-size:16px; font-weight: 500; color: #64748b;">(Operations View)</span></h1>
+                <p>Manage and monitor real-time availability across all washing bays. View occupancy and schedule high-priority details.</p>
             </div>
             <div class="header-actions">
                 <button class="btn-secondary">Filters</button>
-                <button class="btn-primary" id="bookSlotBtn">+ Book Slot</button>
+                <button class="btn-primary" style="background-color: #10b981;">+ Manual Booking</button>
             </div>
         </div>
 
@@ -70,10 +73,26 @@
             </div>
         </div>
 
+        <!-- Live Bay Status Footer (Admin Only) -->
+        <div class="live-status-section">
+            <div class="live-status-header">
+                <h3>Live Bay Status</h3>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    Live Data Monitoring Active
+                </div>
+            </div>
+
+            <div class="bay-cards" id="liveBayCardsContainer">
+                <!-- Dynamically injected via JS -->
+            </div>
+        </div>
+
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // -- Calendar Logic --
             const calendarContainer = document.getElementById('sidebarCalendarContainer');
             const dateDisplay = document.getElementById('selectedDateDisplay');
             
@@ -175,7 +194,7 @@
 
                             dateDisplay.innerText = dateString;
                             renderCalendar(); // Re-render to highlight selected
-                            fetchSlots(selectedDate); // Fetch new slots when date changes
+                            fetchAdminSlots(selectedDate); // Re-fetch the grid based on date
                         };
                     }
 
@@ -198,7 +217,7 @@
 
                 calendarContainer.appendChild(grid);
             }
-
+            
             // Format today's date for initial display
             const options = { weekday: 'long', month: 'short', day: 'numeric' };
             let initDateStr = selectedDate.toLocaleDateString('en-US', options);
@@ -207,12 +226,7 @@
             dateDisplay.innerText = initDateStr.replace(d, d + suffix);
 
             renderCalendar();
-            fetchSlots(selectedDate); // Initial load of slots for today
-
-            // State variables for slot selection
-            let currentSelectedSlotId = null;
-            let currentSlotDataList = [];
-            let currentFormattedDate = null;
+            fetchAdminSlots(selectedDate); // Initial load for today
 
             // Global mapping definitions (1hr 30min intervals)
             const SLOT_MAP = [
@@ -227,126 +241,125 @@
                 { id: 9, time: '08:00 PM', label: 'Closing Slot' }
             ];
 
-            async function fetchSlots(date) {
+            async function fetchAdminSlots(date) {
                 const formattedDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
                 try {
                     const response = await fetch('http://localhost:8081/api/v1/bookings/daily?date=' + formattedDate);
                     if (!response.ok) throw new Error("Failed to load slots");
                     const data = await response.json();
-                    
-                    // Save state for re-rendering during selection
-                    currentSlotDataList = data;
-                    currentFormattedDate = formattedDate;
-                    currentSelectedSlotId = null; // reset selection on new date
-                    
-                    renderSlots();
+                    renderAdminSlots(data);
                 } catch (err) {
                     console.error(err);
-                    document.getElementById('bookingSlotsContainer').innerHTML = '<p style="color:red; text-align:center; grid-column: 1/-1; padding: 32px;">Failed connecting to the Backend API. Make sure Spring Boot is running.</p>';
+                    document.getElementById('bookingSlotsContainer').innerHTML = '<p style="color:red; text-align:center; grid-column: 1/-1; padding: 32px;">Failed connecting to the Backend API.</p>';
                 }
             }
 
-            function renderSlots() {
+            function renderAdminSlots(slotDataList) {
                 const container = document.getElementById('bookingSlotsContainer');
                 container.innerHTML = '';
                 
-                const now = new Date();
-                const [year, month, day] = currentFormattedDate.split('-');
-                
                 SLOT_MAP.forEach(slotDef => {
-                    const apiData = currentSlotDataList.find(s => s.timeSlot === slotDef.id);
+                    const apiData = slotDataList.find(s => s.timeSlot === slotDef.id);
                     const occupiedCount = apiData ? apiData.occupiedCount : 0;
+                    const bayDetails = apiData ? apiData.bayDetails : [];
                     const availableCount = 5 - occupiedCount;
                     const isFull = availableCount === 0;
-
-                    let isPast = false;
-                    const timeMatch = slotDef.time.match(/(\d+):(\d+)\s(AM|PM)/);
-                    if (timeMatch) {
-                        let hours = parseInt(timeMatch[1], 10);
-                        const mins = parseInt(timeMatch[2], 10);
-                        const ampm = timeMatch[3];
-                        if (ampm === 'PM' && hours < 12) hours += 12;
-                        if (ampm === 'AM' && hours === 12) hours = 0;
-                        const slotDateTime = new Date(year, month - 1, day, hours, mins, 0);
-                        if (slotDateTime < now) {
-                            isPast = true;
-                        }
-                    }
-
-                    const isUnavailable = isFull || isPast;
-                    const isSelected = currentSelectedSlotId === slotDef.id;
                     
                     let badgeClass = "green";
                     let badgeText = "OPEN";
-                    if (isPast) { badgeClass = "gray"; badgeText = "PASSED"; }
-                    else if (occupiedCount >= 5) { badgeClass = "red"; badgeText = "FULL"; }
+                    if (occupiedCount >= 5) { badgeClass = "red"; badgeText = "FULL"; }
                     else if (occupiedCount >= 4) { badgeClass = "gray"; badgeText = "FINAL"; }
                     else if (occupiedCount >= 2) { badgeClass = "yellow"; badgeText = "BUSY"; }
 
-                    // Build progress segments
-                    let segmentsHtml = '';
-                    for(let i=0; i<5; i++) {
-                        const filledClass = (i < occupiedCount) ? "filled" : "";
-                        const lockedClass = isUnavailable ? "locked" : "";
-                        segmentsHtml += `<div class="segment ${filledClass} ${lockedClass}"></div>`;
+                    // Build Admin detailed bay list
+                    let bayListHtml = '';
+                    for(let i=1; i<=5; i++) {
+                        const bayInfo = bayDetails.find(b => b.bayId === i);
+                        if (bayInfo && bayInfo.username) {
+                            const isLocked = isFull ? 'style="background-color: #fee2e2; border-left-color: #ef4444;"' : '';
+                            const priorityStyle = isFull ? 'style="color:#dc2626;"' : '';
+                            bayListHtml += `<div class="admin-bay-item occupied" ${isLocked}><span class="admin-bay-name">Bay ${i}</span><div><span class="admin-bay-user">${bayInfo.username}</span> <span class="admin-bay-priority" ${priorityStyle}>${bayInfo.priorityFormat}</span></div></div>`;
+                        } else {
+                            bayListHtml += `<div class="admin-bay-item"><span class="admin-bay-name">Bay ${i}</span><span class="admin-bay-user" style="color:#94a3b8;">Free</span></div>`;
+                        }
                     }
 
                     const card = document.createElement('div');
-                    card.className = "slot-card " + (isUnavailable ? "locked" : "");
-                    if (isSelected && !isUnavailable) {
-                        card.style.borderColor = '#2563eb';
-                        card.style.boxShadow = '0 0 0 2px rgba(37,99,235,0.2)';
-                        card.style.backgroundColor = '#f8fafc';
-                    }
-                    
-                    if (!isUnavailable) {
-                        // Hook up click handler to perform selection
-                        card.style.cursor = 'pointer';
-                        card.onclick = () => {
-                            currentSelectedSlotId = slotDef.id;
-                            renderSlots(); // Re-render to show selection box
-                        };
-                    }
+                    card.className = "slot-card " + (isFull ? "locked" : "");
                     
                     card.innerHTML = `
-                        <div>
-                            <div class="slot-header">
-                                <div class="slot-time">${slotDef.time}</div>
-                                <div class="badge ${badgeClass}">${badgeText}</div>
-                            </div>
-                            <div class="slot-label">${slotDef.label}</div>
+                        <div class="slot-header">
+                            <div class="slot-time" ${isFull ? 'style="color: #64748b;"' : ''}>${slotDef.time}</div>
+                            <div class="badge ${badgeClass}">${badgeText}</div>
                         </div>
-                        <div>
-                            <div class="occupancy-info" ${isUnavailable ? 'style="color: #cbd5e1;"' : ''}>
-                                <span ${isUnavailable ? 'style="text-decoration: line-through;"' : ''}>Bay Occupancy</span>
-                                <span ${isUnavailable ? 'style="color: #94a3b8;"' : ''}><strong>${isPast ? 'Unavailable' : availableCount + '/5 Available'}</strong></span>
-                            </div>
-                            <div class="progress-segments">
-                                ${segmentsHtml}
-                            </div>
+                        <div class="slot-label">${slotDef.label}</div>
+                        <div class="admin-bay-list">
+                            ${bayListHtml}
                         </div>
                     `;
                     container.appendChild(card);
                 });
             }
 
-            document.getElementById('bookSlotBtn').addEventListener('click', async () => {
-                if (!currentSelectedSlotId) {
-                    alert('Please select an available time slot from the calendar first.');
-                    return;
-                }
-            
-                const userDataString = localStorage.getItem('userProfile');
-                if (!userDataString) {
-                    alert("Please log in first to book a slot.");
-                    window.location.href = 'index.html';
-                    return;
-                }
-                
-                // Navigate to the multi-step booking wizard with selected parameters
-                window.location.href = `user_bookslot.html?date=${currentFormattedDate}&slot=${currentSelectedSlotId}`;
-            });
+            // -- Live Bay Status Logic --
+            const bayCardsContainer = document.getElementById('liveBayCardsContainer');
+
+            // 6-stage pipeline
+            const STAGES = [
+                { id: 'pending', name: 'Pending', icon: '⧖', subtext: 'Awaiting arrival...' },
+                { id: 'queued', name: 'Queued', icon: '≡', subtext: 'Next in line' },
+                { id: 'washing', name: 'Washing', icon: '≈', subtext: 'High pressure wash' },
+                { id: 'drying', name: 'Drying', icon: '♨', subtext: 'Microfiber & air' },
+                { id: 'ready', name: 'Ready', icon: '★', subtext: 'Waiting for pickup' },
+                { id: 'completed', name: 'Completed', icon: '✓', subtext: 'Dispatched. Available.' }
+            ];
+
+            // Initialize Bays with varying default mock stages
+            let bays = [
+                { index: 1, currentStage: 0 },
+                { index: 2, currentStage: 2 },
+                { index: 3, currentStage: 0 },
+                { index: 4, currentStage: 3 },
+                { index: 5, currentStage: 0 }
+            ];
+
+            function renderBayCards() {
+                bayCardsContainer.innerHTML = '';
+
+                bays.forEach(bay => {
+                    const stage = STAGES[bay.currentStage];
+
+                    const card = document.createElement('div');
+                    card.className = `bay-card bay-state-${stage.id}`;
+                    
+                    // Click handler to advance stage
+                    card.onclick = () => {
+                        // Loop back to 0 if at the end, else increment
+                        bay.currentStage = (bay.currentStage + 1) % STAGES.length;
+                        renderBayCards(); // Re-render instantly mapping new class and data
+                    };
+
+                    card.innerHTML = `
+                        <div class="bay-card-header">
+                            Bay ${bay.index}
+                            <div class="bay-icon">${stage.icon}</div>
+                        </div>
+                        <div class="bay-state">${stage.name}</div>
+                        <div class="bay-subtext">${stage.subtext}</div>
+                    `;
+
+                    bayCardsContainer.appendChild(card);
+                });
+            }
+
+            renderBayCards();
         });
+
+        function logoutAdmin(event) {
+            if(event) event.preventDefault();
+            localStorage.removeItem('userProfile');
+            window.location.href = 'index.html';
+        }
     </script>
 </body>
 </html>
