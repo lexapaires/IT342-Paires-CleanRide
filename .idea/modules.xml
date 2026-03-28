@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/IT342-Paires-CleanRide.iml" filepath="$PROJECT_DIR$/.idea/IT342-Paires-CleanRide.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cleanride/cleanride.iml" filepath="$PROJECT_DIR$/cleanride/cleanride.iml" />
-    </modules>
-  </component>
-</project>
