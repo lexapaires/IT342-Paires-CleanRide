@@ -145,6 +145,108 @@
             color: #0f172a;
             margin-bottom: 8px;
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-icon {
+            width: 56px;
+            height: 56px;
+            background: #fee2e2;
+            color: #dc2626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .modal-content h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .modal-content p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-cancel:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .btn-confirm {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: #dc2626;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -178,6 +280,27 @@
             </div>
         </div>
     </main>
+
+    <!-- Cancellation Modal Overlay -->
+    <div class="modal-overlay" id="cancelModal">
+        <div class="modal-container">
+            <div class="modal-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <div class="modal-content">
+                <h3>Cancel Booking</h3>
+                <p>Are you sure you want to cancel this booking?<br>This action cannot be undone.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeCancelModal()">No, Keep it</button>
+                <button class="btn-confirm" onclick="confirmCancelBooking()">Yes, Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         const SLOT_MAP = {
@@ -294,24 +417,45 @@
             }
         });
 
-        window.cancelBooking = async function(bookingId) {
-            if (!confirm("Are you sure you want to cancel this booking?")) return;
+        let bookingIdToCancel = null;
+
+        window.cancelBooking = function(bookingId) {
+            bookingIdToCancel = bookingId;
+            document.getElementById('cancelModal').classList.add('active');
+        };
+
+        window.closeCancelModal = function() {
+            bookingIdToCancel = null;
+            document.getElementById('cancelModal').classList.remove('active');
+        };
+
+        window.confirmCancelBooking = async function() {
+            if (!bookingIdToCancel) return;
+            
+            const btn = document.querySelector('.btn-confirm');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Canceling...';
+            btn.disabled = true;
             
             try {
-                const response = await fetch('http://localhost:8081/api/v1/bookings/' + bookingId + '/cancel', {
+                const response = await fetch('http://localhost:8081/api/v1/bookings/' + bookingIdToCancel + '/cancel', {
                     method: 'POST'
                 });
                 
                 if (response.ok) {
-                    alert("Booking cancelled successfully.");
                     location.reload();
                 } else {
                     const errorTxt = await response.text();
                     alert("Cannot cancel booking: " + errorTxt);
+                    closeCancelModal();
                 }
             } catch (err) {
                 console.error(err);
                 alert("Network error. Please try again.");
+                closeCancelModal();
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         };
     </script>

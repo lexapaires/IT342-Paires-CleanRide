@@ -7,6 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 /**
  * Handles user authentication and navigation to registration.
@@ -33,8 +35,44 @@ class LoginActivity : AppCompatActivity() {
             val password = etPassword.text.toString().trim()
 
             if (validateInput(email, password)) {
-                // Navigate to MainActivity upon successful login
-                navigateToMain()
+                btnLogin.isEnabled = false
+                btnLogin.text = "Logging in..."
+                kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch {
+                    try {
+                        val responseSuccess = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            val url = java.net.URL("http://10.0.2.2:8081/api/v1/auth/login")
+                            val connection = url.openConnection() as java.net.HttpURLConnection
+                            connection.requestMethod = "POST"
+                            connection.setRequestProperty("Content-Type", "application/json; utf-8")
+                            connection.setRequestProperty("Accept", "application/json")
+                            connection.doOutput = true
+
+                            // Create JSON object utilizing native Android org.json
+                            val jsonInput = org.json.JSONObject()
+                            jsonInput.put("email", email)
+                            jsonInput.put("password", password)
+
+                            connection.outputStream.use { os ->
+                                val input = jsonInput.toString().toByteArray(Charsets.UTF_8)
+                                os.write(input, 0, input.size)
+                            }
+
+                            connection.responseCode in 200..299
+                        }
+                        if (responseSuccess) {
+                            Toast.makeText(this@LoginActivity, "Login Successful!", Toast.LENGTH_SHORT).show()
+                            navigateToMain()
+                        } else {
+                            // Can be 401 Unauthorized
+                            Toast.makeText(this@LoginActivity, "Invalid credentials", Toast.LENGTH_LONG).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(this@LoginActivity, "Network Error: ${e.message}", Toast.LENGTH_LONG).show()
+                    } finally {
+                        btnLogin.isEnabled = true
+                        btnLogin.text = "Log In"
+                    }
+                }
             }
         }
 

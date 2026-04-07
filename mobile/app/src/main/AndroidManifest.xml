@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.paires.cleanride"> <uses-permission android:name="android.permission.INTERNET" />
+    package="com.paires.cleanride">
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,17 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cleanride"
         android:extractNativeLibs="false"
-        tools:targetApi="31">
-
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true"
-            android:label="CleanRide Login">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31"> <activity
+        android:name=".LoginActivity"
+        android:exported="true"
+        android:label="CleanRide Login">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
         <activity
             android:name=".RegisterActivity"

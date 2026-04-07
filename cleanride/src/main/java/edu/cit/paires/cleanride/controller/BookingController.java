@@ -115,7 +115,7 @@ public class BookingController {
                 if (b != null) {
                     bd.setBookingId(b.getId());
                     bd.setUsername(b.getUser().getUsername());
-                    bd.setPriorityFormat("#P" + String.format("%02d", b.getId()));
+                    bd.setPriorityFormat(b.getPriorityNumber() != null ? b.getPriorityNumber() : "#P" + String.format("%02d", b.getId()));
                 }
                 bayDetails.add(bd);
             }
