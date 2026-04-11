@@ -43,8 +43,10 @@ public class BookingController {
 
         Booking booking = new Booking();
         booking.setUser(user);
+        booking.setUsername(user.getUsername());
         booking.setBookingDate(request.getBookingDate());
         booking.setTimeSlot(request.getTimeSlot());
+        booking.setCurrentStageIndex(0);
         
         // Find next available bay 1-5
         List<Booking> existing = bookingRepository.findByBookingDate(request.getBookingDate()).stream()
@@ -116,6 +118,7 @@ public class BookingController {
                     bd.setBookingId(b.getId());
                     bd.setUsername(b.getUser().getUsername());
                     bd.setPriorityFormat(b.getPriorityNumber() != null ? b.getPriorityNumber() : "#P" + String.format("%02d", b.getId()));
+                    bd.setCurrentStageIndex(b.getCurrentStageIndex() != null ? b.getCurrentStageIndex() : 0);
                 }
                 bayDetails.add(bd);
             }
@@ -141,6 +144,7 @@ public class BookingController {
             dto.setServiceType(b.getServiceType());
             dto.setVehicleType(b.getVehicleType());
             dto.setTotalPrice(b.getTotalPrice());
+            dto.setCurrentStageIndex(b.getCurrentStageIndex() != null ? b.getCurrentStageIndex() : 0);
             return dto;
         }).collect(Collectors.toList());
 
@@ -187,5 +191,16 @@ public class BookingController {
         bookingRepository.save(booking);
 
         return ResponseEntity.ok("Booking successfully cancelled");
+    }
+
+    @PutMapping("/{bookingId}/stage")
+    public ResponseEntity<?> updateBookingStage(@PathVariable("bookingId") Long bookingId, @RequestParam("stageIndex") Integer stageIndex) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null) {
+            return new ResponseEntity<>("Booking not found", HttpStatus.NOT_FOUND);
+        }
+        booking.setCurrentStageIndex(stageIndex);
+        bookingRepository.save(booking);
+        return ResponseEntity.ok("Successfully updated stage");
     }
 }

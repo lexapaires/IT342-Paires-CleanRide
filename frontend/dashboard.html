@@ -35,6 +35,13 @@
             <a href="profile.html" class="nav-link">Profile</a>
         </div>
 
+        <div id="userLiveBayWidget" style="padding: 16px; margin: 0 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; display: none;">
+            <div style="font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">My Live Booking</div>
+            <div id="userLiveBayContent">
+                <!-- dynamic content -->
+            </div>
+        </div>
+
         <div class="sidebar-calendar" id="sidebarCalendarContainer">
             <!-- Dynamically injected via JS -->
         </div>
@@ -74,6 +81,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            initUserLiveTracker();
+            
             const calendarContainer = document.getElementById('sidebarCalendarContainer');
             const dateDisplay = document.getElementById('selectedDateDisplay');
             
@@ -346,6 +355,63 @@
                 // Navigate to the multi-step booking wizard with selected parameters
                 window.location.href = `user_bookslot.html?date=${currentFormattedDate}&slot=${currentSelectedSlotId}`;
             });
+
+            async function initUserLiveTracker() {
+                const userDataStr = localStorage.getItem('userProfile');
+                if (!userDataStr) return;
+                const userData = JSON.parse(userDataStr);
+                
+                try {
+                    const response = await fetch(`http://localhost:8081/api/v1/bookings/user/${userData.id}`);
+                    if (!response.ok) return;
+                    const bookings = await response.json();
+                    
+                    const today = new Date();
+                    const formattedToday = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
+                    
+                    const activeBooking = bookings.find(b => 
+                        b.bookingDate === formattedToday && 
+                        b.status !== 'CANCELLED' && 
+                        b.status !== 'COMPLETED'
+                    );
+
+                    if (activeBooking) {
+                        const widget = document.getElementById('userLiveBayWidget');
+                        const content = document.getElementById('userLiveBayContent');
+                        widget.style.display = 'block';
+
+                        const STAGES = [
+                            { name: 'Pending', icon: '⧖', subtext: 'Awaiting arrival...', color: '#64748b' },
+                            { name: 'Queued', icon: '≡', subtext: 'Next in line', color: '#d97706' },
+                            { name: 'Washing', icon: '≈', subtext: 'High pressure wash', color: '#2563eb' },
+                            { name: 'Drying', icon: '♨', subtext: 'Microfiber & air', color: '#0891b2' },
+                            { name: 'Ready', icon: '★', subtext: 'Waiting for pickup', color: '#059669' },
+                            { name: 'Completed', icon: '✓', subtext: 'Dispatched', color: '#7c3aed' }
+                        ];
+
+                        const stageIdx = activeBooking.currentStageIndex || 0;
+                        const stage = STAGES[stageIdx];
+
+                        content.innerHTML = `
+                            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase;">
+                                    Bay ${activeBooking.bayId || '?'}
+                                    <div style="width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; border: 1.5px solid ${stage.color}; color: ${stage.color};">${stage.icon}</div>
+                                </div>
+                                <div style="font-size: 14px; font-weight: 700; color: ${stage.color}; margin-bottom: 2px;">${stage.name}</div>
+                                <div style="font-size: 11px; color: #64748b;">${stage.subtext}</div>
+                            </div>
+                        `;
+                        
+                        // Auto-poll tracker
+                        setTimeout(initUserLiveTracker, 5000);
+                    } else {
+                        document.getElementById('userLiveBayWidget').style.display = 'none';
+                    }
+                } catch(err) {
+                    console.error("Live tracker error:", err);
+                }
+            }
         });
     </script>
 </body>

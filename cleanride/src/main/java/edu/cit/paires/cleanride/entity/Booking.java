@@ -17,6 +17,9 @@ public class Booking {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "booking_date", nullable = false)
     private LocalDate bookingDate;
 
@@ -41,6 +44,9 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private BookingStatus status = BookingStatus.CONFIRMED;
+
+    @Column(name = "current_stage_index")
+    private Integer currentStageIndex = 0;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

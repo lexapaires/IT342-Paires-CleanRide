@@ -15,5 +15,6 @@ public class SlotDetailResponse {
         private Long bookingId;
         private String username;
         private String priorityFormat;
+        private Integer currentStageIndex;
     }
 }

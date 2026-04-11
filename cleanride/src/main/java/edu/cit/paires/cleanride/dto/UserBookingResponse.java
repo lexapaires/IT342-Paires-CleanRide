@@ -15,4 +15,5 @@ public class UserBookingResponse {
     private String serviceType;
     private String vehicleType;
     private Double totalPrice;
+    private Integer currentStageIndex;
 }

@@ -60,8 +60,6 @@
             <div class="tabs-row">
                 <div class="tabs">
                     <button class="tab active">All Bays</button>
-                    <button class="tab">Available</button>
-                    <button class="tab">Express Only</button>
                 </div>
                 <div class="date-indicator">
                     Showing slots for <strong id="selectedDateDisplay">Thursday, Oct 5th</strong>
@@ -75,8 +73,21 @@
 
         <!-- Live Bay Status Footer (Admin Only) -->
         <div class="live-status-section">
-            <div class="live-status-header">
-                <h3>Live Bay Status</h3>
+            <div class="live-status-header" style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <h3 style="margin: 0;">Live Bay Status</h3>
+                    <select id="bayTimeSlotSelector" style="padding: 6px 32px 6px 12px; border-radius: 8px; border: 1px solid #cbd5e1; background-color: #f8fafc; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; color: #334155; cursor: pointer; outline: none; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2364748b%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2010.5L3.5%206h9L8%2010.5z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 10px center; transition: all 0.2s;">
+                        <option value="1">08:00 AM</option>
+                        <option value="2">09:30 AM</option>
+                        <option value="3">11:00 AM</option>
+                        <option value="4">12:30 PM</option>
+                        <option value="5">02:00 PM</option>
+                        <option value="6">03:30 PM</option>
+                        <option value="7">05:00 PM</option>
+                        <option value="8">06:30 PM</option>
+                        <option value="9">08:00 PM</option>
+                    </select>
+                </div>
                 <div class="status-indicator">
                     <div class="status-dot"></div>
                     Live Data Monitoring Active
@@ -99,6 +110,10 @@
             let currentDate = new Date();
             currentDate.setDate(1); // Set to 1st to prevent month-skip bugs
             let selectedDate = new Date(); // Defaults to today
+
+            // Global State Variables referencing the slot/bay map
+            let currentFormattedDate = null;
+            let lastFetchedData = [];
 
             function renderCalendar() {
                 calendarContainer.innerHTML = '';
@@ -242,12 +257,14 @@
             ];
 
             async function fetchAdminSlots(date) {
-                const formattedDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
+                currentFormattedDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
                 try {
-                    const response = await fetch('http://localhost:8081/api/v1/bookings/daily?date=' + formattedDate);
+                    const response = await fetch('http://localhost:8081/api/v1/bookings/daily?date=' + currentFormattedDate);
                     if (!response.ok) throw new Error("Failed to load slots");
                     const data = await response.json();
+                    lastFetchedData = data;
                     renderAdminSlots(data);
+                    renderBayCards(); // Re-render live bay cards for the active date
                 } catch (err) {
                     console.error(err);
                     document.getElementById('bookingSlotsContainer').innerHTML = '<p style="color:red; text-align:center; grid-column: 1/-1; padding: 32px;">Failed connecting to the Backend API.</p>';
@@ -275,12 +292,21 @@
                     let bayListHtml = '';
                     for(let i=1; i<=5; i++) {
                         const bayInfo = bayDetails.find(b => b.bayId === i);
+                        
+                        // Check if we have a live pipeline stage > 0 for this bay slot
+                        const stageIdx = bayInfo && bayInfo.currentStageIndex ? bayInfo.currentStageIndex : 0;
+                        const stageObj = STAGES[stageIdx];
+                        let stageBadge = '';
+                        if (stageIdx > 0 && stageObj) {
+                            stageBadge = `<span style="font-size: 10px; font-weight: 700; background: ${stageObj.bg}; color: ${stageObj.color}; padding: 2px 4px; border-radius: 4px; margin-left: 6px; letter-spacing: 0.5px; text-transform: uppercase;">${stageObj.name}</span>`;
+                        }
+
                         if (bayInfo && bayInfo.username) {
                             const isLocked = isFull ? 'style="background-color: #fee2e2; border-left-color: #ef4444;"' : '';
                             const priorityStyle = isFull ? 'style="color:#dc2626;"' : '';
-                            bayListHtml += `<div class="admin-bay-item occupied" ${isLocked}><span class="admin-bay-name">Bay ${i}</span><div><span class="admin-bay-user">${bayInfo.username}</span> <span class="admin-bay-priority" ${priorityStyle}>${bayInfo.priorityFormat}</span></div></div>`;
+                            bayListHtml += `<div class="admin-bay-item occupied" ${isLocked}><span class="admin-bay-name">Bay ${i}</span><div><span class="admin-bay-user">${bayInfo.username}</span> <span class="admin-bay-priority" ${priorityStyle}>${bayInfo.priorityFormat}</span>${stageBadge}</div></div>`;
                         } else {
-                            bayListHtml += `<div class="admin-bay-item"><span class="admin-bay-name">Bay ${i}</span><span class="admin-bay-user" style="color:#94a3b8;">Free</span></div>`;
+                            bayListHtml += `<div class="admin-bay-item"><span class="admin-bay-name">Bay ${i}</span><div><span class="admin-bay-user" style="color:#94a3b8;">Free</span>${stageBadge}</div></div>`;
                         }
                     }
 
@@ -306,53 +332,81 @@
 
             // 6-stage pipeline
             const STAGES = [
-                { id: 'pending', name: 'Pending', icon: '⧖', subtext: 'Awaiting arrival...' },
-                { id: 'queued', name: 'Queued', icon: '≡', subtext: 'Next in line' },
-                { id: 'washing', name: 'Washing', icon: '≈', subtext: 'High pressure wash' },
-                { id: 'drying', name: 'Drying', icon: '♨', subtext: 'Microfiber & air' },
-                { id: 'ready', name: 'Ready', icon: '★', subtext: 'Waiting for pickup' },
-                { id: 'completed', name: 'Completed', icon: '✓', subtext: 'Dispatched. Available.' }
+                { id: 'pending', name: 'Pending', icon: '⧖', subtext: 'Awaiting arrival...', bg: '#f1f5f9', color: '#64748b' },
+                { id: 'queued', name: 'Queued', icon: '≡', subtext: 'Next in line', bg: '#fef3c7', color: '#d97706' },
+                { id: 'washing', name: 'Washing', icon: '≈', subtext: 'High pressure wash', bg: '#eff6ff', color: '#2563eb' },
+                { id: 'drying', name: 'Drying', icon: '♨', subtext: 'Microfiber & air', bg: '#ecfeff', color: '#0891b2' },
+                { id: 'ready', name: 'Ready', icon: '★', subtext: 'Waiting for pickup', bg: '#ecfdf5', color: '#059669' },
+                { id: 'completed', name: 'Completed', icon: '✓', subtext: 'Dispatched. Available.', bg: '#f5f3ff', color: '#7c3aed' }
             ];
+            
+            // Dropdown logic
+            const timeSlotSelector = document.getElementById('bayTimeSlotSelector');
+            let currentLiveTimeSlot = parseInt(timeSlotSelector.value);
 
-            // Initialize Bays with varying default mock stages
-            let bays = [
-                { index: 1, currentStage: 0 },
-                { index: 2, currentStage: 2 },
-                { index: 3, currentStage: 0 },
-                { index: 4, currentStage: 3 },
-                { index: 5, currentStage: 0 }
-            ];
+            timeSlotSelector.addEventListener('change', (e) => {
+                currentLiveTimeSlot = parseInt(e.target.value);
+                renderBayCards();
+            });
 
             function renderBayCards() {
+                if(!currentFormattedDate) return;
                 bayCardsContainer.innerHTML = '';
 
-                bays.forEach(bay => {
-                    const stage = STAGES[bay.currentStage];
+                const apiData = lastFetchedData.find(s => s.timeSlot === currentLiveTimeSlot);
+                const bayDetails = apiData ? apiData.bayDetails : [];
+
+                for(let bayIndex = 1; bayIndex <= 5; bayIndex++) {
+                    const bayInfo = bayDetails.find(b => b.bayId === bayIndex);
+                    const bookingId = bayInfo ? bayInfo.bookingId : null;
+                    const currentStageIdx = bayInfo && bayInfo.currentStageIndex ? bayInfo.currentStageIndex : 0;
+                    
+                    const stage = STAGES[currentStageIdx];
 
                     const card = document.createElement('div');
                     card.className = `bay-card bay-state-${stage.id}`;
                     
-                    // Click handler to advance stage
-                    card.onclick = () => {
-                        // Loop back to 0 if at the end, else increment
-                        bay.currentStage = (bay.currentStage + 1) % STAGES.length;
-                        renderBayCards(); // Re-render instantly mapping new class and data
-                    };
-
-                    card.innerHTML = `
-                        <div class="bay-card-header">
-                            Bay ${bay.index}
-                            <div class="bay-icon">${stage.icon}</div>
-                        </div>
-                        <div class="bay-state">${stage.name}</div>
-                        <div class="bay-subtext">${stage.subtext}</div>
-                    `;
+                    if (!bookingId) {
+                        card.style.opacity = '0.5';
+                        card.style.cursor = 'default';
+                        card.innerHTML = `
+                            <div class="bay-card-header">Bay ${bayIndex}</div>
+                            <div class="bay-state" style="color: #94a3b8;">Empty</div>
+                        `;
+                    } else {
+                        // Click handler to advance stage via API
+                        card.onclick = async () => {
+                            const nextStage = (currentStageIdx + 1) % STAGES.length;
+                            
+                            try {
+                                const btnHTML = card.innerHTML;
+                                card.innerHTML = '<div style="padding:20px;text-align:center;color:#64748b;">Updating...</div>';
+                                const response = await fetch(`http://localhost:8081/api/v1/bookings/${bookingId}/stage?stageIndex=${nextStage}`, {
+                                    method: 'PUT'
+                                });
+                                if (!response.ok) throw new Error("Failed to update");
+                                
+                                // Re-fetch the layout to capture the new exact state from the servers
+                                fetchAdminSlots(selectedDate);
+                            } catch(err) {
+                                alert("Failed pushing update to server");
+                                console.error(err);
+                                fetchAdminSlots(selectedDate);
+                            }
+                        };
+                        card.innerHTML = `
+                            <div class="bay-card-header">
+                                Bay ${bayIndex}
+                                <div class="bay-icon">${stage.icon}</div>
+                            </div>
+                            <div class="bay-state">${stage.name}</div>
+                            <div class="bay-subtext">${stage.subtext}</div>
+                        `;
+                    }
 
                     bayCardsContainer.appendChild(card);
-                });
+                }
             }
-
-            renderBayCards();
         });
 
         function logoutAdmin(event) {
