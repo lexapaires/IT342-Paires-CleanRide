@@ -17,7 +17,7 @@
         android:extractNativeLibs="false"
         android:usesCleartextTraffic="true"
         tools:targetApi="31"> <activity
-        android:name=".LoginActivity"
+        android:name=".auth.LoginActivity"
         android:exported="true"
         android:label="CleanRide Login">
         <intent-filter>
@@ -27,12 +27,12 @@
     </activity>
 
         <activity
-            android:name=".RegisterActivity"
+            android:name=".auth.RegisterActivity"
             android:exported="false"
             android:label="Create Account" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".booking.MainActivity"
             android:exported="false"
             android:label="Dashboard" />
 

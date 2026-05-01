@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CleanRide - Admin Manual Booking</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="dashboard.css">
+    <title>CleanRide - Select Service & Vehicle</title>
+    <link rel="stylesheet" href="../common/style.css">
+    <link rel="stylesheet" href="../common/dashboard.css">
     <style>
         body {
             background: #f8fafc;
@@ -34,55 +34,6 @@
             font-size: 14px;
             color: #64748b;
             margin-bottom: 32px;
-        }
-
-        .customer-info-box {
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 48px;
-        }
-
-        .customer-info-box h3 {
-            margin: 0 0 16px 0;
-            color: #0f172a;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 16px;
-        }
-
-        .form-group {
-            flex: 1;
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 8px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 14px;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.2s;
-            background-color: #f8fafc;
-            color: #0f172a;
-        }
-
-        .form-group input:focus {
-            border-color: #2563eb;
-            background-color: white;
         }
 
         .cards-grid {
@@ -322,20 +273,18 @@
 </head>
 <body>
 
+    <!-- Sidebar -->
     <aside class="sidebar" style="width: 250px;">
-        <div class="brand-placeholder">
-            <div class="brand-logo" style="background: linear-gradient(135deg, #10b981, #059669);"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
-            CleanRide <span style="font-size: 10px; background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 4px; margin-left: 4px;">ADMIN</span>
+        <div class="brand-placeholder" style="cursor: pointer;" onclick="window.location.href='../booking/dashboard.html'">
+            <div class="brand-logo"><img src="../common/LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            CleanRide
         </div>
-        
         <div class="nav-section">
-            <div class="nav-title">Management</div>
-            <a href="admin_dashboard.html" class="nav-link active">Booking Calendar</a>
-            <a href="admin_staff.html" class="nav-link">Staff</a>
-            <a href="admin_reviews.html" class="nav-link">Reviews</a>
-            <a href="admin_cancellation_requests.html" class="nav-link">Cancellation Requests</a>
-            <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px;"></div>
-            <a href="#" class="nav-link" style="color: #ef4444; font-weight: 600;" onclick="logoutAdmin(event)">Log out</a>
+            <div class="nav-title">Main Menu</div>
+
+            <a href="../booking/dashboard.html" class="nav-link active">Booking Calendar</a>
+            <a href="../booking/my_bookings.html" class="nav-link">My Bookings</a>
+            <a href="../auth/profile.html" class="nav-link">Profile</a>
         </div>
     </aside>
 
@@ -346,26 +295,9 @@
                 Selected Slot: Resolving...
             </div>
 
-            <!-- STEP 1: Customer Info -->
-            <div class="step-title">Customer Information</div>
-            <div class="step-subtitle">Step 1 of 3: Provide the customer's identity</div>
-            
-            <div class="customer-info-box">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Customer Email</label>
-                        <input type="email" id="cEmail" placeholder="customer@example.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Customer Username</label>
-                        <input type="text" id="cUsername" placeholder="e.g. johndoe" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STEP 2: Service Selection -->
+            <!-- STEP 1 -->
             <div class="step-title">Select Your Service</div>
-            <div class="step-subtitle">Step 2 of 3: Choose the type of carwash experience you prefer</div>
+            <div class="step-subtitle">Step 1 of 2: Choose the type of carwash experience you prefer</div>
             
             <div class="cards-grid">
                 <!-- Self Service -->
@@ -386,9 +318,11 @@
                 </div>
             </div>
 
-            <!-- STEP 3: Vehicle Selection -->
+            <div class="divider"></div>
+
+            <!-- STEP 2 -->
             <div class="step-title">Vehicle Scale Selection</div>
-            <div class="step-subtitle">Step 3 of 3: Select your vehicle size to finalize the pricing</div>
+            <div class="step-subtitle">Step 2 of 2: Select your vehicle size to finalize the pricing</div>
 
             <div class="vehicle-grid">
                 <!-- 4 Seater -->
@@ -415,7 +349,7 @@
 
             <div class="action-footer">
                 <div class="total-price-display">
-                    <span>Total Amount (Manual Entry)</span>
+                    <span>Total Amount (Pay on arrival)</span>
                     <div id="totalDisplay">₱350</div>
                 </div>
                 <div>
@@ -439,7 +373,7 @@
             </div>
 
             <div class="priority-box">
-                <div class="priority-label">YOUR PRIORITY NUMBER</div>
+                <div class="priority-label">Your Priority Number</div>
                 <div class="priority-number" id="receiptPriority">CR-X-XXXX-XX</div>
                 <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">Present this to the receptionist upon arrival</div>
             </div>
@@ -449,7 +383,7 @@
                 <span id="receiptSchedule">--</span>
             </div>
             <div class="info-row">
-                <strong>Service &amp; Vehicle:</strong>
+                <strong>Service & Vehicle:</strong>
                 <span id="receiptService">--</span>
             </div>
             <div class="info-row" style="border-bottom: none;">
@@ -457,7 +391,7 @@
                 <span id="receiptTotal" style="color: #2563eb; font-weight: 700;">--</span>
             </div>
 
-            <button class="btn-primary" style="width: 100%; margin-top: 24px;" onclick="window.location.href='admin_dashboard.html'">Back to Dashboard</button>
+            <button class="btn-primary" style="width: 100%; margin-top: 24px;" onclick="window.location.href='../booking/dashboard.html'">Back to Dashboard</button>
         </div>
     </div>
 
@@ -486,12 +420,12 @@
 
         if (!state.date || !state.slotId) {
             alert("No booking time selected. Redirecting to calendar.");
-            window.location.href = 'admin_dashboard.html';
+            window.location.href = '../booking/dashboard.html';
         }
 
         const slotDef = SLOT_MAP.find(s => s.id === state.slotId);
         document.getElementById('bookingContextDisplay').innerText = 
-            `Locking in Manual Booking for: ${state.date} at ${slotDef ? slotDef.time : 'Unknown Time'}`;
+            `Locking in Booking for: ${state.date} at ${slotDef ? slotDef.time : 'Unknown Time'}`;
 
         // Surcharge Data
         const Surcharges = {
@@ -547,17 +481,14 @@
 
         // Execution
         document.getElementById('confirmBookingBtn').addEventListener('click', async () => {
-            const email = document.getElementById('cEmail').value.trim();
-            const username = document.getElementById('cUsername').value.trim();
-
-            if(!email || !username) {
-                alert("Please fill out the Customer Identity fields.");
-                return;
+            const userDataString = localStorage.getItem('userProfile');
+            if (!userDataString) {
+                alert("Please log in first."); window.location.href = '../auth/index.html'; return;
             }
+            const userData = JSON.parse(userDataString);
 
             const payload = {
-                email: email,
-                username: username,
+                userId: userData.id,
                 bookingDate: state.date,
                 timeSlot: state.slotId,
                 serviceType: state.serviceType,
@@ -570,7 +501,7 @@
             btn.disabled = true;
 
             try {
-                const response = await fetch('http://localhost:8081/api/v1/bookings/manual', {
+                const response = await fetch('http://localhost:8081/api/v1/bookings', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -590,7 +521,7 @@
                     document.getElementById('receiptModal').style.display = 'flex';
                 } else {
                     const err = await response.text();
-                    alert(err); // Prints the exact text, e.g. "Customer account does not exist..."
+                    alert("Booking failed: " + err);
                     btn.innerText = 'Confirm Booking';
                     btn.disabled = false;
                 }
@@ -602,11 +533,6 @@
             }
         });
 
-        function logoutAdmin(event) {
-            if(event) event.preventDefault();
-            localStorage.removeItem('userProfile');
-            window.location.href = 'index.html';
-        }
     </script>
 </body>
 </html>

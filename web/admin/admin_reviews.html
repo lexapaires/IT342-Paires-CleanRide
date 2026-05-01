@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CleanRide - Admin Reviews</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="../common/style.css">
+    <link rel="stylesheet" href="../common/dashboard.css">
     <style>
         body { background: #f8fafc; padding: 0; display: flex; align-items: stretch; }
         .bubble { display: none; }
@@ -67,16 +67,16 @@
 
     <aside class="sidebar">
         <div class="brand-placeholder">
-            <div class="brand-logo" style="background: linear-gradient(135deg, #10b981, #059669);"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            <div class="brand-logo" style="background: linear-gradient(135deg, #10b981, #059669);"><img src="../common/LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
             CleanRide <span style="font-size: 10px; background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 4px; margin-left: 4px;">ADMIN</span>
         </div>
         
         <div class="nav-section">
             <div class="nav-title">Management</div>
-            <a href="admin_dashboard.html" class="nav-link">Booking Calendar</a>
-            <a href="admin_staff.html" class="nav-link">Staff</a>
-            <a href="admin_reviews.html" class="nav-link active">Reviews</a>
-            <a href="admin_cancellation_requests.html" class="nav-link">Cancellation Requests</a>
+            <a href="../admin/admin_dashboard.html" class="nav-link">Booking Calendar</a>
+            <a href="../admin/admin_staff.html" class="nav-link">Staff</a>
+            <a href="../admin/admin_reviews.html" class="nav-link active">Reviews</a>
+            <a href="../admin/admin_cancellation_requests.html" class="nav-link">Cancellation Requests</a>
             <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px;"></div>
             <a href="#" class="nav-link" style="color: #ef4444; font-weight: 600;" onclick="logoutAdmin(event)">Log out</a>
         </div>
@@ -143,7 +143,7 @@
         function logoutAdmin(event) {
             if(event) event.preventDefault();
             localStorage.removeItem('userProfile');
-            window.location.href = 'index.html';
+            window.location.href = '../auth/index.html';
         }
 
         function openModal(imgSrc) {

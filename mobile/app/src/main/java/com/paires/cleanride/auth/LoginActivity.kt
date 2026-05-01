@@ -1,6 +1,8 @@
-package com.paires.cleanride
+package com.paires.cleanride.auth
 
+import com.paires.cleanride.R
 import android.content.Intent
+import com.paires.cleanride.booking.MainActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../common/style.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>CleanRide - Register</title>
 </head>
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="logo-container">
             <div class="logo-wrapper">
-                <img src="LOGO.png" alt="CleanRide Logo" class="logo-icon">
+                <img src="../common/LOGO.png" alt="CleanRide Logo" class="logo-icon">
             </div>
             <h2>Join CleanRide</h2>
             <p class="subtitle">Create your account today.</p>
@@ -62,7 +62,7 @@
         
         <div class="link-container">
             <p>Already have an account?</p>
-            <button class="link-btn" onclick="window.location.href='index.html'" type="button">Log In Here</button>
+            <button class="link-btn" onclick="window.location.href='../auth/index.html'" type="button">Log In Here</button>
         </div>
     </div>
 
@@ -127,7 +127,7 @@
                     const userData = await res.json();
                     localStorage.setItem('userProfile', JSON.stringify(userData));
                     alert("Google Account Registered & Logged In!");
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '../booking/dashboard.html';
                 } else {
                     const result = await res.text();
                     alert("Google Registration Error: " + result);
@@ -155,7 +155,7 @@
             });
             const result = await response.text();
             alert(result);
-            if (response.ok) window.location.href = 'index.html';
+            if (response.ok) window.location.href = '../auth/index.html';
         });
     </script>
 </body>

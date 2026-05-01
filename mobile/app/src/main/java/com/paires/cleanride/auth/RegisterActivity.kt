@@ -1,5 +1,6 @@
-package com.paires.cleanride
+package com.paires.cleanride.auth
 
+import com.paires.cleanride.R
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast

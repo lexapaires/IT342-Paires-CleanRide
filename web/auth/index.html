@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../common/style.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>CleanRide - Login</title>
 </head>
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="logo-container">
             <div class="logo-wrapper">
-                <img src="LOGO.png" alt="CleanRide Logo" class="logo-icon">
+                <img src="../common/LOGO.png" alt="CleanRide Logo" class="logo-icon">
             </div>
             <h2>CleanRide</h2>
             <p class="subtitle">Welcome back! Please login.</p>
@@ -48,7 +48,7 @@
         
         <div class="link-container">
             <p>Don't have an account?</p>
-            <button class="link-btn" onclick="window.location.href='register.html'" type="button">Create an Account</button>
+            <button class="link-btn" onclick="window.location.href='../auth/register.html'" type="button">Create an Account</button>
         </div>
     </div>
 
@@ -63,12 +63,12 @@
                 if (res.status === 202) {
                     const googleData = await res.json();
                     sessionStorage.setItem('googleRegistrationData', JSON.stringify(googleData));
-                    window.location.href = 'register.html';
+                    window.location.href = '../auth/register.html';
                 } else if (res.ok) {
                     const userData = await res.json();
                     localStorage.setItem('userProfile', JSON.stringify(userData));
                     alert("Google Login Successful!");
-                    window.location.href = 'dashboard.html';
+                    window.location.href = '../booking/dashboard.html';
                 } else {
                     const result = await res.text();
                     alert("Google Login Error: " + result);
@@ -114,13 +114,13 @@
                     const result = await response.text();
                     if (result === "ADMIN_LOGIN_SUCCESS") {
                         alert("Admin Login Successful!");
-                        window.location.href = 'admin_dashboard.html';
+                        window.location.href = '../admin/admin_dashboard.html';
                     } else {
                         // The backend now returns the User JSON object
                         const userData = JSON.parse(result);
                         localStorage.setItem('userProfile', JSON.stringify(userData));
                         alert("Login Successful!");
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '../booking/dashboard.html';
                     }
                 } else {
                     const result = await response.text();

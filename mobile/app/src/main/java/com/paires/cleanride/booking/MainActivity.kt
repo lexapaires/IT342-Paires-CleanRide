@@ -1,5 +1,6 @@
-package com.paires.cleanride
+package com.paires.cleanride.booking
 
+import com.paires.cleanride.R
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
