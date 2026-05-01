@@ -90,7 +90,14 @@ class MainActivity : AppCompatActivity() {
         setupDates()
 
         btnNext.setOnClickListener {
-            Toast.makeText(this, "Proceed to Service Selection (Slot: $selectedSlot on $selectedDate)", Toast.LENGTH_LONG).show()
+            if (selectedSlot != null) {
+                val intent = android.content.Intent(this, WizardActivity::class.java)
+                intent.putExtra("SELECTED_DATE", selectedDate)
+                intent.putExtra("SELECTED_SLOT", selectedSlot)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Please select a slot", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

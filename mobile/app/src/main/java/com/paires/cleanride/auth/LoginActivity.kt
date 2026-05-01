@@ -59,9 +59,24 @@ class LoginActivity : AppCompatActivity() {
                                 os.write(input, 0, input.size)
                             }
 
-                            connection.responseCode in 200..299
+                            if (connection.responseCode in 200..299) {
+                                val responseString = connection.inputStream.bufferedReader().use { it.readText() }
+                                if (responseString == "ADMIN_LOGIN_SUCCESS") {
+                                    -1L
+                                } else {
+                                    val jsonResponse = org.json.JSONObject(responseString)
+                                    jsonResponse.getLong("id")
+                                }
+                            } else {
+                                null
+                            }
                         }
-                        if (responseSuccess) {
+                        if (responseSuccess != null) {
+                            val sharedPref = getSharedPreferences("CleanRidePrefs", android.content.Context.MODE_PRIVATE)
+                            with (sharedPref.edit()) {
+                                putLong("userId", responseSuccess)
+                                apply()
+                            }
                             Toast.makeText(this@LoginActivity, "Login Successful!", Toast.LENGTH_SHORT).show()
                             navigateToMain()
                         } else {

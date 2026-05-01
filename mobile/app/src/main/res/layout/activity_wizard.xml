@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8fafc"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Booking Details"
+            android:textColor="#0f172a"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Your Service"
+            android:textColor="#334155"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <RadioGroup
+            android:id="@+id/rgServiceType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+            
+            <RadioButton
+                android:id="@+id/rbSelfService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Self-Service Carwash (₱100.00)"
+                android:checked="true"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@drawable/bg_slot_item"
+                android:layout_marginBottom="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rbFullService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Full-Service Carwash (₱150.00)"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@drawable/bg_slot_item" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicle Scale Selection"
+            android:textColor="#334155"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <RadioGroup
+            android:id="@+id/rgVehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="24dp">
+            
+            <RadioButton
+                android:id="@+id/rb4Seater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4-Seater (₱0 Surcharge)"
+                android:checked="true"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@drawable/bg_slot_item"
+                android:layout_marginBottom="8dp"/>
+
+            <RadioButton
+                android:id="@+id/rb7Seater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="7-Seater (+₱100 Surcharge)"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@drawable/bg_slot_item"
+                android:layout_marginBottom="8dp"/>
+                
+            <RadioButton
+                android:id="@+id/rbMaxSeater"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=">7-Seater (+₱200 Surcharge)"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:background="@drawable/bg_slot_item" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e2e8f0"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date &amp; Time:"
+                android:textColor="#64748b"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tvDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023-10-25 08:00 AM"
+                android:textColor="#0f172a"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="32dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Amount:"
+                android:textColor="#64748b"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvTotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱100.00"
+                android:textColor="#2563eb"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Confirm Booking"
+            android:textSize="16sp"
+            app:cornerRadius="12dp"
+            app:backgroundTint="#2563eb" />
+
+    </LinearLayout>
+</ScrollView>

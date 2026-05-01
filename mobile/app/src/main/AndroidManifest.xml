@@ -36,5 +36,10 @@
             android:exported="false"
             android:label="Dashboard" />
 
+        <activity
+            android:name=".booking.WizardActivity"
+            android:exported="false"
+            android:label="Book a Slot" />
+
     </application>
 </manifest>
