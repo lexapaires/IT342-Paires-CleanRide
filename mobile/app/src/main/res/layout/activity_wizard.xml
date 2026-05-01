@@ -307,5 +307,15 @@
             app:cornerRadius="12dp"
             app:backgroundTint="#2563eb" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancel"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Cancel"
+            android:textColor="#64748b"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
+
     </LinearLayout>
 </ScrollView>

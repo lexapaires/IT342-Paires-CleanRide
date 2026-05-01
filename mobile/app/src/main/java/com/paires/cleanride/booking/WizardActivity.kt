@@ -42,6 +42,7 @@ class WizardActivity : AppCompatActivity() {
     private lateinit var cardMaxSeater: LinearLayout
 
     private lateinit var btnConfirm: MaterialButton
+    private lateinit var btnCancel: MaterialButton
 
     // Pricing Matrix
     private val surcharges = mapOf(
@@ -75,6 +76,7 @@ class WizardActivity : AppCompatActivity() {
         tvSurMax = findViewById(R.id.tvSurMax)
         
         btnConfirm = findViewById(R.id.btnConfirm)
+        btnCancel = findViewById(R.id.btnCancel)
 
         cardSelfService = findViewById(R.id.cardSelfService)
         cardFullService = findViewById(R.id.cardFullService)
@@ -116,6 +118,10 @@ class WizardActivity : AppCompatActivity() {
 
         btnConfirm.setOnClickListener {
             submitBooking()
+        }
+
+        btnCancel.setOnClickListener {
+            finish()
         }
     }
 

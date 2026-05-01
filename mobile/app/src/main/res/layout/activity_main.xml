@@ -190,7 +190,11 @@
         </LinearLayout>
         <LinearLayout android:id="@+id/navGarage" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" android:tint="@color/text_slate_500" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="GARAGE" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/text_slate_500" android:layout_marginTop="4dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MY BOOKINGS" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/text_slate_500" android:layout_marginTop="4dp" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/navReviews" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" android:tint="@color/text_slate_500" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="REVIEWS" android:textSize="10sp" android:textStyle="bold" android:textColor="@color/text_slate_500" android:layout_marginTop="4dp" />
         </LinearLayout>
         <LinearLayout android:id="@+id/navProfile" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
             <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_calendar" android:tint="@color/text_slate_500" />
