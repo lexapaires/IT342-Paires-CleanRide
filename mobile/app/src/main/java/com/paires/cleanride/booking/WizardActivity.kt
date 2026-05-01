@@ -3,8 +3,7 @@ package com.paires.cleanride.booking
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -25,11 +24,30 @@ class WizardActivity : AppCompatActivity() {
     private var selectedSlot: Int = -1
     private var userId: Long = -1
 
-    private var basePrice = 100
-    private var vehicleSurcharge = 0
+    private var serviceType = "SELF_SERVICE"
+    private var vehicleType = "4_SEATER"
+
+    private var basePrice = 250
+    private var vehicleSurcharge = 100
 
     private lateinit var tvTotalAmount: TextView
+    private lateinit var tvSur4: TextView
+    private lateinit var tvSur7: TextView
+    private lateinit var tvSurMax: TextView
+
+    private lateinit var cardSelfService: LinearLayout
+    private lateinit var cardFullService: LinearLayout
+    private lateinit var card4Seater: LinearLayout
+    private lateinit var card7Seater: LinearLayout
+    private lateinit var cardMaxSeater: LinearLayout
+
     private lateinit var btnConfirm: MaterialButton
+
+    // Pricing Matrix
+    private val surcharges = mapOf(
+        "SELF_SERVICE" to mapOf("4_SEATER" to 100, "7_SEATER" to 130, "GREATER_THAN_7_SEATER" to 160),
+        "FULL_SERVICE" to mapOf("4_SEATER" to 130, "7_SEATER" to 160, "GREATER_THAN_7_SEATER" to 190)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,24 +70,48 @@ class WizardActivity : AppCompatActivity() {
         tvDateTime.text = "$selectedDate (Slot $selectedSlot)"
 
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
+        tvSur4 = findViewById(R.id.tvSur4)
+        tvSur7 = findViewById(R.id.tvSur7)
+        tvSurMax = findViewById(R.id.tvSurMax)
+        
         btnConfirm = findViewById(R.id.btnConfirm)
 
-        val rgServiceType = findViewById<RadioGroup>(R.id.rgServiceType)
-        val rgVehicleType = findViewById<RadioGroup>(R.id.rgVehicleType)
+        cardSelfService = findViewById(R.id.cardSelfService)
+        cardFullService = findViewById(R.id.cardFullService)
+        card4Seater = findViewById(R.id.card4Seater)
+        card7Seater = findViewById(R.id.card7Seater)
+        cardMaxSeater = findViewById(R.id.cardMaxSeater)
 
-        rgServiceType.setOnCheckedChangeListener { _, checkedId ->
-            basePrice = if (checkedId == R.id.rbSelfService) 100 else 150
-            updateTotal()
+        setupClickListeners()
+        updateUI() // Initial State
+    }
+
+    private fun setupClickListeners() {
+        cardSelfService.setOnClickListener {
+            serviceType = "SELF_SERVICE"
+            basePrice = 250
+            updateUI()
         }
 
-        rgVehicleType.setOnCheckedChangeListener { _, checkedId ->
-            vehicleSurcharge = when (checkedId) {
-                R.id.rb4Seater -> 0
-                R.id.rb7Seater -> 100
-                R.id.rbMaxSeater -> 200
-                else -> 0
-            }
-            updateTotal()
+        cardFullService.setOnClickListener {
+            serviceType = "FULL_SERVICE"
+            basePrice = 350
+            updateUI()
+        }
+
+        card4Seater.setOnClickListener {
+            vehicleType = "4_SEATER"
+            updateUI()
+        }
+
+        card7Seater.setOnClickListener {
+            vehicleType = "7_SEATER"
+            updateUI()
+        }
+
+        cardMaxSeater.setOnClickListener {
+            vehicleType = "GREATER_THAN_7_SEATER"
+            updateUI()
         }
 
         btnConfirm.setOnClickListener {
@@ -77,21 +119,29 @@ class WizardActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateTotal() {
+    private fun updateUI() {
+        // Update Service Cards
+        cardSelfService.setBackgroundResource(if (serviceType == "SELF_SERVICE") R.drawable.bg_wizard_card_selected else R.drawable.bg_wizard_card_default)
+        cardFullService.setBackgroundResource(if (serviceType == "FULL_SERVICE") R.drawable.bg_wizard_card_selected else R.drawable.bg_wizard_card_default)
+
+        // Update Vehicle Cards
+        card4Seater.setBackgroundResource(if (vehicleType == "4_SEATER") R.drawable.bg_wizard_card_selected else R.drawable.bg_wizard_card_default)
+        card7Seater.setBackgroundResource(if (vehicleType == "7_SEATER") R.drawable.bg_wizard_card_selected else R.drawable.bg_wizard_card_default)
+        cardMaxSeater.setBackgroundResource(if (vehicleType == "GREATER_THAN_7_SEATER") R.drawable.bg_wizard_card_selected else R.drawable.bg_wizard_card_default)
+
+        // Update Surcharge Texts
+        val currentSurcharges = surcharges[serviceType]!!
+        tvSur4.text = "+₱${currentSurcharges["4_SEATER"]}"
+        tvSur7.text = "+₱${currentSurcharges["7_SEATER"]}"
+        tvSurMax.text = "+₱${currentSurcharges["GREATER_THAN_7_SEATER"]}"
+
+        // Update Total
+        vehicleSurcharge = currentSurcharges[vehicleType]!!
         val total = basePrice + vehicleSurcharge
-        tvTotalAmount.text = "₱$total.00"
+        tvTotalAmount.text = "₱$total"
     }
 
     private fun submitBooking() {
-        val rgService = findViewById<RadioGroup>(R.id.rgServiceType)
-        val rgVehicle = findViewById<RadioGroup>(R.id.rgVehicleType)
-
-        val serviceType = if (rgService.checkedRadioButtonId == R.id.rbSelfService) "SELF_SERVICE" else "FULL_SERVICE"
-        val vehicleType = when (rgVehicle.checkedRadioButtonId) {
-            R.id.rb4Seater -> "4_SEATER"
-            R.id.rb7Seater -> "7_SEATER"
-            else -> "MAX_SEATER"
-        }
         val totalPrice = basePrice + vehicleSurcharge
 
         btnConfirm.isEnabled = false
