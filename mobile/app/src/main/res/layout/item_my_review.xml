@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_wizard_card_default"
+    android:padding="20dp"
+    android:elevation="2dp">
+
+    <!-- Header -->
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2023-10-25"
+        android:textColor="#0f172a"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="COMPLETED"
+        android:textColor="#166534"
+        android:textSize="10sp"
+        android:fontFamily="sans-serif-black"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:backgroundTint="#dcfce7"
+        android:background="@drawable/bg_wizard_card_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e2e8f0"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+    <!-- Info Rows -->
+    <LinearLayout
+        android:id="@+id/infoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/divider1">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Time" android:textColor="#64748b" android:textSize="12sp" />
+            <TextView android:id="@+id/tvTime" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="08:00 AM" android:textColor="#0f172a" android:textSize="12sp" android:fontFamily="sans-serif-black" />
+        </LinearLayout>
+        
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Service" android:textColor="#64748b" android:textSize="12sp" />
+            <TextView android:id="@+id/tvServiceType" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SELF SERVICE" android:textColor="#0f172a" android:textSize="12sp" android:fontFamily="sans-serif-black" />
+        </LinearLayout>
+        
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bay" android:textColor="#64748b" android:textSize="12sp" />
+            <TextView android:id="@+id/tvBay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bay 1" android:textColor="#0f172a" android:textSize="12sp" android:fontFamily="sans-serif-black" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f1f5f9"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/infoContainer" />
+
+    <!-- Review Section Container -->
+    <LinearLayout
+        android:id="@+id/reviewSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/divider2">
+
+        <!-- Show this if NOT reviewed -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWriteReview"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Write Review"
+            android:textSize="14sp"
+            app:cornerRadius="8dp"
+            app:backgroundTint="#2563eb"
+            android:visibility="visible" />
+
+        <!-- Show this if REVIEWED -->
+        <LinearLayout
+            android:id="@+id/containerReviewed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            
+            <TextView
+                android:id="@+id/tvStars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="★★★★★"
+                android:textColor="#fbbf24"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp" />
+                
+            <TextView
+                android:id="@+id/tvFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="&quot;Great service!&quot;"
+                android:textColor="#475569"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:background="#f8fafc"
+                android:padding="12dp"
+                android:backgroundTint="#f8fafc" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

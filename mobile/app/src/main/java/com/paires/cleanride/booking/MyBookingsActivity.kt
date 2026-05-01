@@ -54,6 +54,14 @@ class MyBookingsActivity : AppCompatActivity() {
             finish()
         }
         
+        val navReviews = findViewById<LinearLayout>(R.id.navReviews)
+        navReviews.setOnClickListener {
+            val intent = Intent(this, MyReviewsActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+            finish()
+        }
+        
         // Garage is active, Profile is dummy
     }
 

@@ -90,7 +90,15 @@ class MainActivity : AppCompatActivity() {
 
         val navGarage = findViewById<LinearLayout>(R.id.navGarage)
         navGarage.setOnClickListener {
-            val intent = android.content.Intent(this, MyBookingsActivity::class.java)
+            val intent = Intent(this, MyBookingsActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+            finish()
+        }
+
+        val navReviews = findViewById<LinearLayout>(R.id.navReviews)
+        navReviews.setOnClickListener {
+            val intent = Intent(this, MyReviewsActivity::class.java)
             startActivity(intent)
             overridePendingTransition(0, 0)
             finish()
@@ -100,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
         btnNext.setOnClickListener {
             if (selectedSlot != null) {
-                val intent = android.content.Intent(this, WizardActivity::class.java)
+                val intent = Intent(this, WizardActivity::class.java)
                 intent.putExtra("SELECTED_DATE", selectedDate)
                 intent.putExtra("SELECTED_SLOT", selectedSlot)
                 startActivity(intent)
