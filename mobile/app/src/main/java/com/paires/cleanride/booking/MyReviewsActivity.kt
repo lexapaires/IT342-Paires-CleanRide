@@ -26,6 +26,7 @@ import org.json.JSONArray
 import java.io.DataOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.Calendar
 import java.util.UUID
 
 class MyReviewsActivity : AppCompatActivity() {
@@ -118,33 +119,61 @@ class MyReviewsActivity : AppCompatActivity() {
                         reviewMap[bId] = ReviewData(rating, feedback)
                     }
 
-                    // Process Bookings
+                    // Process Bookings — mirror web logic:
+                    // Show if status == COMPLETED, OR if past time & not cancelled
                     val reviewItems = mutableListOf<ReviewItem>()
                     for (i in 0 until bookingsData.length()) {
                         val obj = bookingsData.getJSONObject(i)
                         val status = if (obj.has("status") && !obj.isNull("status")) obj.getString("status") else "UNKNOWN"
 
-                        // Only consider COMPLETED bookings
-                        if (status.uppercase() == "COMPLETED") {
-                            val bookingId = obj.getLong("id")
-                            val date = if (obj.has("bookingDate") && !obj.isNull("bookingDate")) obj.getString("bookingDate") else "Unknown Date"
-                            val timeSlot = if (obj.has("timeSlot") && !obj.isNull("timeSlot")) obj.getInt("timeSlot") else 1
-                            val service = if (obj.has("serviceType") && !obj.isNull("serviceType")) obj.getString("serviceType") else "N/A"
-                            val bayId = if (obj.has("bayId") && !obj.isNull("bayId")) obj.getInt("bayId") else 1
+                        // Skip cancelled bookings entirely
+                        if (status.uppercase() == "CANCELLED" || status.uppercase() == "CANCELED") continue
 
-                            val existingReview = reviewMap[bookingId]
-                            
-                            reviewItems.add(ReviewItem(
-                                bookingId = bookingId,
-                                date = date,
-                                time = mapTimeSlot(timeSlot),
-                                serviceType = service.replace("_", " "),
-                                bayId = bayId,
-                                isReviewed = existingReview != null,
-                                rating = existingReview?.rating ?: 0,
-                                feedback = existingReview?.feedback ?: ""
-                            ))
+                        val bookingId = obj.getLong("id")
+                        val date = if (obj.has("bookingDate") && !obj.isNull("bookingDate")) obj.getString("bookingDate") else continue
+                        val timeSlot = if (obj.has("timeSlot") && !obj.isNull("timeSlot")) obj.getInt("timeSlot") else 1
+                        val service = if (obj.has("serviceType") && !obj.isNull("serviceType")) obj.getString("serviceType") else "N/A"
+                        val bayId = if (obj.has("bayId") && !obj.isNull("bayId")) obj.getInt("bayId") else 1
+
+                        // Check if booking is effectively completed
+                        val isEffectivelyCompleted = if (status.uppercase() == "COMPLETED") {
+                            true
+                        } else {
+                            // Time-based check: slot end = slot start + 90 minutes
+                            try {
+                                val parts = date.split("-")
+                                val year = parts[0].toInt()
+                                val month = parts[1].toInt() - 1 // 0-indexed
+                                val day = parts[2].toInt()
+                                val (slotHour, slotMinute) = getSlotTime(timeSlot)
+
+                                val slotStart = Calendar.getInstance()
+                                slotStart.set(year, month, day, slotHour, slotMinute, 0)
+                                slotStart.set(Calendar.MILLISECOND, 0)
+
+                                val slotEnd = slotStart.clone() as Calendar
+                                slotEnd.add(Calendar.MINUTE, 90)
+
+                                Calendar.getInstance().after(slotEnd)
+                            } catch (e: Exception) {
+                                false
+                            }
                         }
+
+                        if (!isEffectivelyCompleted) continue
+
+                        val existingReview = reviewMap[bookingId]
+
+                        reviewItems.add(ReviewItem(
+                            bookingId = bookingId,
+                            date = date,
+                            time = mapTimeSlot(timeSlot),
+                            serviceType = service.replace("_", " "),
+                            bayId = bayId,
+                            isReviewed = existingReview != null,
+                            rating = existingReview?.rating ?: 0,
+                            feedback = existingReview?.feedback ?: ""
+                        ))
                     }
 
                     if (reviewItems.isEmpty()) {
@@ -269,6 +298,21 @@ class MyReviewsActivity : AppCompatActivity() {
             8 -> "06:30 PM - 08:00 PM"
             9 -> "08:00 PM - 09:30 PM"
             else -> "Unknown Time"
+        }
+    }
+
+    private fun getSlotTime(slot: Int): Pair<Int, Int> {
+        return when (slot) {
+            1 -> Pair(8, 0)
+            2 -> Pair(9, 30)
+            3 -> Pair(11, 0)
+            4 -> Pair(12, 30)
+            5 -> Pair(14, 0)
+            6 -> Pair(15, 30)
+            7 -> Pair(17, 0)
+            8 -> Pair(18, 30)
+            9 -> Pair(20, 0)
+            else -> Pair(8, 0)
         }
     }
 }
