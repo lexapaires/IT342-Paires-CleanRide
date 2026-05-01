@@ -28,7 +28,7 @@ class MyBookingsActivity : AppCompatActivity() {
 
     private lateinit var rvBookings: RecyclerView
     private lateinit var tvEmpty: TextView
-    private val bookingAdapter = BookingAdapter()
+    private val bookingAdapter = BookingListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class MyBookingsActivity : AppCompatActivity() {
             overridePendingTransition(0, 0)
             finish()
         }
-        
+
         val navReviews = findViewById<LinearLayout>(R.id.navReviews)
         navReviews.setOnClickListener {
             val intent = Intent(this, MyReviewsActivity::class.java)
@@ -61,7 +61,7 @@ class MyBookingsActivity : AppCompatActivity() {
             overridePendingTransition(0, 0)
             finish()
         }
-        
+
         // Garage is active, Profile is dummy
     }
 
@@ -92,11 +92,13 @@ class MyBookingsActivity : AppCompatActivity() {
                 }
 
                 if (bookingsData != null) {
-                    val bookings = mutableListOf<BookingItem>()
+                    val ongoing = mutableListOf<BookingItem>()
+                    val completed = mutableListOf<BookingItem>()
+                    val cancelled = mutableListOf<BookingItem>()
+
                     for (i in 0 until bookingsData.length()) {
                         val obj = bookingsData.getJSONObject(i)
-                        
-                        // Parse safely handling potential nulls
+
                         val date = if (obj.has("bookingDate") && !obj.isNull("bookingDate")) obj.getString("bookingDate") else "Unknown Date"
                         val timeSlot = if (obj.has("timeSlot") && !obj.isNull("timeSlot")) obj.getInt("timeSlot") else 1
                         val service = if (obj.has("serviceType") && !obj.isNull("serviceType")) obj.getString("serviceType") else "N/A"
@@ -105,35 +107,45 @@ class MyBookingsActivity : AppCompatActivity() {
                         val total = if (obj.has("totalPrice") && !obj.isNull("totalPrice")) obj.getDouble("totalPrice") else 0.0
                         val status = if (obj.has("status") && !obj.isNull("status")) obj.getString("status") else "UNKNOWN"
 
-                        // Map time slot
-                        val timeStr = mapTimeSlot(timeSlot)
-                        
-                        bookings.add(BookingItem(
+                        val item = BookingItem(
                             date = date,
-                            time = timeStr,
+                            time = mapTimeSlot(timeSlot),
                             serviceType = service.replace("_", " "),
                             vehicleType = vehicle.replace("_", "-"),
                             priorityNumber = priority,
                             totalPrice = total,
                             status = status
-                        ))
+                        )
+
+                        when (status.uppercase()) {
+                            "CONFIRMED" -> ongoing.add(item)
+                            "COMPLETED" -> completed.add(item)
+                            "CANCELLED", "CANCELED" -> cancelled.add(item)
+                            else -> ongoing.add(item)
+                        }
                     }
-                    
-                    if (bookings.isEmpty()) {
+
+                    // Build flat list with section headers
+                    val allItems = mutableListOf<BookingListItem>()
+
+                    if (ongoing.isNotEmpty()) {
+                        allItems.add(BookingListItem.Header("Ongoing"))
+                        ongoing.sortedByDescending { it.date }.forEach { allItems.add(BookingListItem.Card(it)) }
+                    }
+                    if (completed.isNotEmpty()) {
+                        allItems.add(BookingListItem.Header("Completed"))
+                        completed.sortedByDescending { it.date }.forEach { allItems.add(BookingListItem.Card(it)) }
+                    }
+                    if (cancelled.isNotEmpty()) {
+                        allItems.add(BookingListItem.Header("Cancelled"))
+                        cancelled.sortedByDescending { it.date }.forEach { allItems.add(BookingListItem.Card(it)) }
+                    }
+
+                    if (allItems.isEmpty()) {
                         tvEmpty.visibility = View.VISIBLE
                     } else {
                         tvEmpty.visibility = View.GONE
-                        
-                        val sortedBookings = bookings.sortedWith(compareBy<BookingItem> {
-                            when (it.status.uppercase()) {
-                                "CONFIRMED" -> 1 // Ongoing
-                                "COMPLETED" -> 2
-                                "CANCELLED" -> 3
-                                else -> 4
-                            }
-                        }.thenByDescending { it.date }.thenByDescending { it.time })
-                        
-                        bookingAdapter.submitList(sortedBookings)
+                        bookingAdapter.submitList(allItems)
                     }
                 } else {
                     Toast.makeText(this@MyBookingsActivity, "Failed to load bookings", Toast.LENGTH_SHORT).show()
@@ -148,19 +160,15 @@ class MyBookingsActivity : AppCompatActivity() {
 
     private fun mapTimeSlot(slot: Int): String {
         return when (slot) {
-            1 -> "08:00 AM - 09:30 AM"
-            2 -> "09:30 AM - 11:00 AM"
-            3 -> "11:00 AM - 12:30 PM"
-            4 -> "12:30 PM - 02:00 PM"
-            5 -> "02:00 PM - 03:30 PM"
-            6 -> "03:30 PM - 05:00 PM"
-            7 -> "05:00 PM - 06:30 PM"
-            8 -> "06:30 PM - 08:00 PM"
-            9 -> "08:00 PM - 09:30 PM"
+            1 -> "08:00 AM - 09:30 AM"; 2 -> "09:30 AM - 11:00 AM"; 3 -> "11:00 AM - 12:30 PM"
+            4 -> "12:30 PM - 02:00 PM"; 5 -> "02:00 PM - 03:30 PM"; 6 -> "03:30 PM - 05:00 PM"
+            7 -> "05:00 PM - 06:30 PM"; 8 -> "06:30 PM - 08:00 PM"; 9 -> "08:00 PM - 09:30 PM"
             else -> "Unknown Time"
         }
     }
 }
+
+// ─── Models ────────────────────────────────────────────────────────────────────
 
 data class BookingItem(
     val date: String,
@@ -172,60 +180,57 @@ data class BookingItem(
     val status: String
 )
 
-class BookingAdapter : RecyclerView.Adapter<BookingAdapter.ViewHolder>() {
-    private var items = listOf<BookingItem>()
+sealed class BookingListItem {
+    data class Header(val title: String) : BookingListItem()
+    data class Card(val item: BookingItem) : BookingListItem()
+}
 
-    fun submitList(newItems: List<BookingItem>) {
+// ─── Adapter ──────────────────────────────────────────────────────────────────
+
+class BookingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    companion object {
+        const val TYPE_HEADER = 0
+        const val TYPE_CARD = 1
+    }
+
+    private var items = listOf<BookingListItem>()
+
+    fun submitList(newItems: List<BookingListItem>) {
         items = newItems
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_booking, parent, false)
-        return ViewHolder(view)
+    override fun getItemViewType(position: Int) = when (items[position]) {
+        is BookingListItem.Header -> TYPE_HEADER
+        is BookingListItem.Card -> TYPE_CARD
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        holder.tvDate.text = item.date
-        holder.tvTime.text = item.time
-        holder.tvServiceType.text = item.serviceType
-        holder.tvVehicleType.text = item.vehicleType
-        holder.tvPriority.text = item.priorityNumber
-        holder.tvTotal.text = "₱${item.totalPrice}0"
-        
-        holder.tvStatus.text = item.status
-        
-        // Badge Colors
-        var badgeBgColor = "#dcfce7"
-        var badgeTextColor = "#16a34a"
-        
-        when (item.status) {
-            "CONFIRMED" -> {
-                badgeBgColor = "#dcfce7"
-                badgeTextColor = "#16a34a"
-            }
-            "CANCELLED" -> {
-                badgeBgColor = "#fee2e2"
-                badgeTextColor = "#dc2626"
-            }
-            "COMPLETED" -> {
-                badgeBgColor = "#f1f5f9"
-                badgeTextColor = "#94a3b8"
-            }
-            else -> {
-                badgeBgColor = "#fef08a"
-                badgeTextColor = "#ca8a04"
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == TYPE_HEADER) {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_section_header, parent, false)
+            HeaderViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_booking, parent, false)
+            CardViewHolder(view)
         }
-        
-        holder.tvStatus.setTextColor(Color.parseColor(badgeTextColor))
-        holder.tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor(badgeBgColor))
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val listItem = items[position]) {
+            is BookingListItem.Header -> (holder as HeaderViewHolder).bind(listItem.title)
+            is BookingListItem.Card -> (holder as CardViewHolder).bind(listItem.item)
+        }
     }
 
     override fun getItemCount() = items.size
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvHeader: TextView = view.findViewById(R.id.tvSectionHeader)
+        fun bind(title: String) { tvHeader.text = title }
+    }
+
+    class CardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvDate: TextView = view.findViewById(R.id.tvDate)
         val tvTime: TextView = view.findViewById(R.id.tvTime)
         val tvStatus: TextView = view.findViewById(R.id.tvStatus)
@@ -233,5 +238,28 @@ class BookingAdapter : RecyclerView.Adapter<BookingAdapter.ViewHolder>() {
         val tvVehicleType: TextView = view.findViewById(R.id.tvVehicleType)
         val tvPriority: TextView = view.findViewById(R.id.tvPriority)
         val tvTotal: TextView = view.findViewById(R.id.tvTotal)
+
+        fun bind(item: BookingItem) {
+            tvDate.text = item.date
+            tvTime.text = item.time
+            tvServiceType.text = item.serviceType
+            tvVehicleType.text = item.vehicleType
+            tvPriority.text = item.priorityNumber
+            tvTotal.text = "₱${item.totalPrice}0"
+            tvStatus.text = item.status
+
+            val (badgeBg, badgeText) = when (item.status.uppercase()) {
+                "CONFIRMED" -> "#dcfce7" to "#16a34a"
+                "CANCELLED", "CANCELED" -> "#fee2e2" to "#dc2626"
+                "COMPLETED" -> "#f1f5f9" to "#94a3b8"
+                else -> "#fef08a" to "#ca8a04"
+            }
+
+            tvStatus.setTextColor(Color.parseColor(badgeText))
+            tvStatus.backgroundTintList = ColorStateList.valueOf(Color.parseColor(badgeBg))
+        }
     }
 }
+
+// Keep old BookingAdapter as alias so nothing else breaks
+typealias BookingAdapter = BookingListAdapter

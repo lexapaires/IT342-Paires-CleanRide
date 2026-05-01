@@ -77,6 +77,23 @@ class LoginActivity : AppCompatActivity() {
                                 putLong("userId", responseSuccess)
                                 apply()
                             }
+                            // Fetch and cache profile info for the Profile screen
+                            try {
+                                val profileUrl = java.net.URL("http://10.0.2.2:8081/api/v1/auth/user/$responseSuccess")
+                                val profileConn = profileUrl.openConnection() as java.net.HttpURLConnection
+                                profileConn.requestMethod = "GET"
+                                if (profileConn.responseCode in 200..299) {
+                                    val profileStr = profileConn.inputStream.bufferedReader().use { it.readText() }
+                                    val profileJson = org.json.JSONObject(profileStr)
+                                    with (sharedPref.edit()) {
+                                        putString("firstName", profileJson.optString("firstName", ""))
+                                        putString("lastName", profileJson.optString("lastName", ""))
+                                        putString("username", profileJson.optString("username", ""))
+                                        putString("email", profileJson.optString("email", ""))
+                                        apply()
+                                    }
+                                }
+                            } catch (e: Exception) { /* non-critical, profile screen will show N/A */ }
                             Toast.makeText(this@LoginActivity, "Login Successful!", Toast.LENGTH_SHORT).show()
                             navigateToMain()
                         } else {

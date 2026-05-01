@@ -105,6 +105,14 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
 
+        val navProfile = findViewById<LinearLayout>(R.id.navProfile)
+        navProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+            finish()
+        }
+
         setupDates()
 
         btnNext.setOnClickListener {
