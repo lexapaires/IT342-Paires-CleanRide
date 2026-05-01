@@ -1,82 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="24dp"
-    android:background="@drawable/bg_wizard_card_default">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Write a Review"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-black"
-        android:textColor="#0f172a"
-        android:textAlignment="center"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rate your experience"
-        android:textSize="14sp"
-        android:textColor="#475569"
-        android:textAlignment="center"
-        android:layout_marginBottom="8dp" />
-
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:stepSize="1"
-        android:rating="5"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Additional Feedback"
-        android:textSize="14sp"
-        android:textColor="#475569"
-        android:layout_marginBottom="8dp" />
-
-    <EditText
-        android:id="@+id/etFeedback"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/bg_wizard_card_default"
-        android:gravity="top|start"
-        android:hint="Tell us how we did..."
-        android:padding="12dp"
-        android:textSize="14sp"
-        android:layout_marginBottom="24dp" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end">
-        
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCancelReview"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:textColor="#64748b" />
-            
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSubmitReview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit Review"
-            app:cornerRadius="8dp"
-            app:backgroundTint="#2563eb"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/bg_wizard_card_default">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Write a Review"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="#0f172a"
+            android:textAlignment="center"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rate your experience"
+            android:textSize="14sp"
+            android:textColor="#475569"
+            android:textAlignment="center"
+            android:layout_marginBottom="8dp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:rating="5"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Additional Feedback"
+            android:textSize="14sp"
+            android:textColor="#475569"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/etFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_wizard_card_default"
+            android:gravity="top|start"
+            android:hint="Tell us how we did..."
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Photo Upload Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Photo (Optional)"
+            android:textSize="14sp"
+            android:textColor="#475569"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnChoosePhoto"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose Photo from Gallery"
+            android:textColor="#2563eb"
+            app:strokeColor="#2563eb"
+            app:cornerRadius="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/ivPhotoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:background="#f1f5f9"
+            android:layout_marginBottom="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelReview"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="#64748b" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmitReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit Review"
+                app:cornerRadius="8dp"
+                app:backgroundTint="#2563eb"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

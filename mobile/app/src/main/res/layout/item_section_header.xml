@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="4dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="10dp">
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="20dp"
+        android:background="#2563eb"
+        android:layout_marginEnd="10dp" />
+
+    <TextView
+        android:id="@+id/tvSectionHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Section Header"
+        android:textColor="#0f172a"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-black"
+        android:letterSpacing="0.03" />
+
+</LinearLayout>
