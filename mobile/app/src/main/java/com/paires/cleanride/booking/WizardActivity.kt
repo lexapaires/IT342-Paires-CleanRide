@@ -184,8 +184,7 @@ class WizardActivity : AppCompatActivity() {
                 }
 
                 if (responseBody != null) {
-                    val jsonResponse = JSONObject(responseBody)
-                    val priorityNumber = jsonResponse.getString("priorityNumber")
+                    val priorityNumber = responseBody.trim()
                     showReceiptDialog(priorityNumber)
                 } else {
                     Toast.makeText(this@WizardActivity, "Booking failed. Slot may be full.", Toast.LENGTH_LONG).show()
