@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanRide - Admin Staff</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        body { background: #f8fafc; padding: 0; display: flex; align-items: stretch; height: 100vh;}
+        .bubble { display: none; }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .split-layout {
+            display: flex;
+            flex: 1;
+            gap: 24px;
+            padding: 0 24px 24px 24px;
+            overflow: hidden;
+        }
+        .staff-panel, .calendar-panel {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .staff-panel {
+            flex: 0 0 350px;
+        }
+        .calendar-panel {
+            flex: 1;
+        }
+        .panel-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-weight: 600;
+            color: #0f172a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        /* Staff List */
+        .staff-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .staff-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .staff-name { font-weight: 600; color: #1e293b; }
+        .staff-status { font-size: 12px; color: #64748b; margin-top: 2px;}
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+        .status-on { background: #dcfce7; color: #166534; }
+        .status-off { background: #f1f5f9; color: #475569; }
+        
+        .add-staff-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+        }
+        .add-staff-form input { width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; font-family: inherit;}
+        .add-staff-form button { width: 100%; box-sizing: border-box; padding: 10px 16px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;}
+
+        /* Staff Slot Card Override */
+        .grid-list {
+            display: grid;
+            gap: 16px;
+        }
+        .staff-slot-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 16px;
+        }
+        .slot-time { font-weight: 700; color: #0f172a; margin-bottom: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;}
+        .slot-bay-list { display: flex; flex-direction: column; gap: 8px; }
+        .slot-bay-item {
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .slot-bay-info { display: flex; flex-direction: column; gap: 2px; }
+        .slot-bay-info strong { font-size: 14px; color: #1e293b; }
+        .slot-bay-info span { font-size: 12px; color: #64748b; }
+        
+        .assign-staff-dropdown {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            font-size: 12px;
+            outline: none;
+            cursor: pointer;
+        }
+        .badge-fs { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;}
+        .badge-ss { background: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;}
+
+        .date-picker-wrap {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand-placeholder">
+            <div class="brand-logo" style="background: linear-gradient(135deg, #10b981, #059669);"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            CleanRide <span style="font-size: 10px; background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 4px; margin-left: 4px;">ADMIN</span>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Management</div>
+            <a href="admin_dashboard.html" class="nav-link">Booking Calendar</a>
+            <a href="admin_staff.html" class="nav-link active">Staff</a>
+            <a href="admin_reviews.html" class="nav-link">Reviews</a>
+            <a href="admin_cancellation_requests.html" class="nav-link">Cancellation Requests</a>
+            <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px;"></div>
+            <a href="#" class="nav-link" style="color: #ef4444; font-weight: 600;" onclick="logoutAdmin(event)">Log out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>Staff Roster & Assignments</h1>
+                <p>Manage on-duty workers and link them to incoming Full Service bookings.</p>
+            </div>
+        </div>
+
+        <div class="date-picker-wrap">
+            <strong style="color: #334155;">Assignment Calendar Date: </strong>
+            <input type="date" id="calendarDate" style="padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; font-family: inherit;">
+        </div>
+
+        <div class="split-layout">
+            <div class="staff-panel">
+                <div class="panel-header">
+                    Staff Roster
+                </div>
+                <div class="panel-body" style="display: flex; flex-direction: column;">
+                    <div id="staffList" style="flex: 1; overflow-y: auto;">
+                        <p style="text-align: center; color: #94a3b8; font-size: 14px;">Loading staff...</p>
+                    </div>
+                    <form class="add-staff-form" id="addStaffForm">
+                        <input type="text" id="newStaffName" placeholder="Staff Name" required>
+                        <button type="submit">+ Add</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="calendar-panel">
+                <div class="panel-header">
+                    Daily Bays
+                    <span id="displayDateText" style="font-size: 13px; font-weight: 400; color: #64748b;"></span>
+                </div>
+                <div class="panel-body" id="calendarSlots">
+                    <p style="text-align: center; color: #94a3b8; font-size: 14px;">Loading slots...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let allStaff = [];
+        let onDutyStaff = [];
+        let selectedDate = new Date().toISOString().split('T')[0];
+
+        const SLOT_MAP = [
+            { id: 1, time: '08:00 AM' }, { id: 2, time: '09:30 AM' }, { id: 3, time: '11:00 AM' },
+            { id: 4, time: '12:30 PM' }, { id: 5, time: '02:00 PM' }, { id: 6, time: '03:30 PM' },
+            { id: 7, time: '05:00 PM' }, { id: 8, time: '06:30 PM' }, { id: 9, time: '08:00 PM' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('calendarDate').value = selectedDate;
+            document.getElementById('displayDateText').innerText = selectedDate;
+
+            document.getElementById('calendarDate').addEventListener('change', (e) => {
+                selectedDate = e.target.value;
+                document.getElementById('displayDateText').innerText = selectedDate;
+                fetchCalendar();
+            });
+
+            document.getElementById('addStaffForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('newStaffName').value;
+                try {
+                    const res = await fetch('http://localhost:8081/api/v1/staff', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ name: name })
+                    });
+                    if (res.ok) {
+                        document.getElementById('newStaffName').value = '';
+                        fetchStaff();
+                    }
+                } catch (e) { alert('Error adding staff'); }
+            });
+
+            // Initial fetches
+            fetchStaff().then(fetchCalendar);
+        });
+
+        async function fetchStaff() {
+            try {
+                const res = await fetch('http://localhost:8081/api/v1/staff');
+                allStaff = await res.json();
+                onDutyStaff = allStaff.filter(s => s.status === 'ON_DUTY');
+                renderStaff();
+            } catch (err) {
+                document.getElementById('staffList').innerHTML = '<p style="color:red;">Failed to connect.</p>';
+            }
+        }
+
+        function renderStaff() {
+            const container = document.getElementById('staffList');
+            container.innerHTML = '';
+            
+            if (allStaff.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#94a3b8; font-size:14px;">No staff registered.</p>';
+                return;
+            }
+
+            allStaff.forEach(staff => {
+                const isOn = staff.status === 'ON_DUTY';
+                const el = document.createElement('div');
+                el.className = 'staff-item';
+                el.innerHTML = `
+                    <div class="staff-info" style="flex: 1;">
+                        <span class="staff-name">${staff.name}</span>
+                        <span class="staff-status">ID: #${staff.id}</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div class="status-badge ${isOn ? 'status-on' : 'status-off'}" onclick="toggleStaffStatus(${staff.id}, '${isOn ? 'OFF_DUTY' : 'ON_DUTY'}')">
+                            ${isOn ? 'On Duty' : 'Off Duty'}
+                        </div>
+                        <button onclick="deleteStaff(${staff.id})" style="padding: 4px 8px; font-size: 10px; font-weight: 600; background: #fee2e2; color: #dc2626; border: 1px solid #f87171; border-radius: 6px; cursor: pointer; font-family: inherit;">Delete</button>
+                    </div>
+                `;
+                container.appendChild(el);
+            });
+            // Also re-render calendar in case on-duty dropdown changed
+            fetchCalendar();
+        }
+
+        async function toggleStaffStatus(id, newStatus) {
+            try {
+                const res = await fetch(`http://localhost:8081/api/v1/staff/${id}/status?status=${newStatus}`, { method: 'PUT' });
+                if (res.ok) fetchStaff();
+            } catch (err) { alert('Failed updating status'); }
+        }
+
+        async function deleteStaff(id) {
+            if(!confirm("Are you sure you want to delete this staff member?")) return;
+            try {
+                const res = await fetch(`http://localhost:8081/api/v1/staff/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    fetchStaff();
+                } else {
+                    const errMsg = await res.text();
+                    alert(errMsg || 'Unable to delete staff.');
+                }
+            } catch (err) { alert('Failed deleting staff'); }
+        }
+
+        async function fetchCalendar() {
+            try {
+                const res = await fetch(`http://localhost:8081/api/v1/bookings/daily?date=${selectedDate}`);
+                const data = await res.json();
+                renderCalendar(data);
+            } catch (err) {
+                document.getElementById('calendarSlots').innerHTML = '<p style="color:red;">Failed to connect.</p>';
+            }
+        }
+
+        function renderCalendar(slotDataList) {
+            const container = document.getElementById('calendarSlots');
+            container.innerHTML = '<div class="grid-list" id="gridListWrap"></div>';
+            const wrap = document.getElementById('gridListWrap');
+
+            SLOT_MAP.forEach(slotDef => {
+                const apiData = slotDataList.find(s => s.timeSlot === slotDef.id);
+                if (!apiData || apiData.occupiedCount === 0) return; // Skip empty slots to keep Staff view clean
+
+                const bayDetails = apiData.bayDetails.filter(b => b.bookingId != null);
+                if(bayDetails.length === 0) return;
+
+                let baysHtml = '';
+                bayDetails.forEach(bay => {
+                    const isFullService = bay.serviceType === 'FULL_SERVICE';
+                    const badge = isFullService ? '<span class="badge-fs">Full Service</span>' : '<span class="badge-ss">Self Service</span>';
+                    
+                    let assignmentUI = '';
+                    if (!isFullService) {
+                        assignmentUI = '<span style="font-size:12px; color:#94a3b8; font-style:italic;">Customer self-service</span>';
+                    } else {
+                        // Dropdown for Full Service
+                        let options = `<option value="">Unassigned</option>`;
+                        onDutyStaff.forEach(s => {
+                            const isSelected = bay.assignedStaffName === s.name ? 'selected' : '';
+                            options += `<option value="${s.id}" ${isSelected}>${s.name}</option>`;
+                        });
+                        
+                        // If they are currently assigned to someone who is OFF DUTY, make sure their name still appears in the dropdown as a locked ghost option
+                        if (bay.assignedStaffName && !onDutyStaff.find(s => s.name === bay.assignedStaffName)) {
+                            options += `<option value="" selected disabled>${bay.assignedStaffName} (Off Duty)</option>`;
+                        }
+
+                        assignmentUI = `<select class="assign-staff-dropdown" onchange="assignStaff(${bay.bookingId}, this.value)">${options}</select>`;
+                    }
+
+                    baysHtml += `
+                        <div class="slot-bay-item">
+                            <div class="slot-bay-info">
+                                <strong>Bay ${bay.bayId} - ${bay.username}</strong>
+                                <span>${badge} ${bay.priorityFormat}</span>
+                            </div>
+                            <div class="slot-bay-action">
+                                ${assignmentUI}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const slotCard = document.createElement('div');
+                slotCard.className = 'staff-slot-card';
+                slotCard.innerHTML = `
+                    <div class="slot-time">${slotDef.time}</div>
+                    <div class="slot-bay-list">${baysHtml}</div>
+                `;
+                wrap.appendChild(slotCard);
+            });
+
+            if(wrap.children.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#94a3b8; padding: 40px; font-size:14px;">No bookings found for this date.</p>';
+            }
+        }
+
+        async function assignStaff(bookingId, staffId) {
+            if(!staffId) return; // Currently un-assign is not an API option, but could be.
+            try {
+                const res = await fetch(`http://localhost:8081/api/v1/bookings/${bookingId}/assign-staff?staffId=${staffId}`, { method: 'PUT' });
+                if (res.ok) {
+                    // Successfully assigned
+                    fetchCalendar();
+                } else {
+                    alert('Assignment failed. Ensure staff exists.');
+                }
+            } catch (err) {
+                alert('Connection error');
+            }
+        }
+
+        function logoutAdmin(event) {
+            if(event) event.preventDefault();
+            localStorage.removeItem('userProfile');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

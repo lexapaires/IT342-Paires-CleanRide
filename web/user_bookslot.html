@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanRide - Select Service & Vehicle</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        body {
+            background: #f8fafc;
+            padding: 0;
+            display: flex;
+            align-items: stretch;
+            font-family: 'Inter', sans-serif;
+        }
+        .bubble { display: none; }
+        
+        .wizard-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            width: 100%;
+        }
+
+        .step-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        
+        .step-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 32px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .selection-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .selection-card:hover {
+            border-color: #94a3b8;
+        }
+
+        .selection-card.active {
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.1);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background: #2563eb;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .service-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            min-height: 42px;
+        }
+
+        .service-price {
+            font-size: 28px;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 16px;
+        }
+        
+        .service-price span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #94a3b8;
+        }
+
+        .select-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .selection-card.active .select-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Vehicle Cards specifically */
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .vehicle-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 32px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .vehicle-card:hover { border-color: #94a3b8; }
+        .vehicle-card.active {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .vehicle-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .vehicle-surcharge {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+
+        .vehicle-desc {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 48px 0;
+            width: 100%;
+        }
+
+        .action-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-top: 40px;
+        }
+
+        .total-price-display {
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        
+        .total-price-display span {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+            display: block;
+        }
+
+        /* Receipt Modal */
+        #receiptModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.8);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .receipt-card {
+            background: white;
+            width: 400px;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .receipt-header {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        
+        .receipt-sub {
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .priority-box {
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .priority-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-number {
+            font-size: 28px;
+            font-weight: 900;
+            color: #2563eb;
+            letter-spacing: 1px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" style="width: 250px;">
+        <div class="brand-placeholder" style="cursor: pointer;" onclick="window.location.href='dashboard.html'">
+            <div class="brand-logo"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            CleanRide
+        </div>
+        <div class="nav-section">
+            <div class="nav-title">Main Menu</div>
+
+            <a href="dashboard.html" class="nav-link active">Booking Calendar</a>
+            <a href="my_bookings.html" class="nav-link">My Bookings</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+        </div>
+    </aside>
+
+    <main class="main-content" style="flex:1; overflow-y: auto;">
+        <div class="wizard-container">
+            
+            <div id="bookingContextDisplay" style="margin-bottom: 24px; background: #eff6ff; padding: 16px; border-radius: 8px; border: 1px solid #bfdbfe; color: #1e3a8a; font-weight: 500;">
+                Selected Slot: Resolving...
+            </div>
+
+            <!-- STEP 1 -->
+            <div class="step-title">Select Your Service</div>
+            <div class="step-subtitle">Step 1 of 2: Choose the type of carwash experience you prefer</div>
+            
+            <div class="cards-grid">
+                <!-- Self Service -->
+                <div class="selection-card active" id="service-self" onclick="selectService('SELF_SERVICE', 250)">
+                    <div class="service-title">Self-Service</div>
+                    <div class="service-desc">Perfect for a quick rinse and touch-up using our professional tools.</div>
+                    <div class="service-price">₱250 <span>base price</span></div>
+                    <div class="select-btn" id="btn-self">Selected ✓</div>
+                </div>
+                
+                <!-- Full Service -->
+                <div class="selection-card" id="service-full" onclick="selectService('FULL_SERVICE', 350)">
+                    <div class="card-badge">RECOMMENDED</div>
+                    <div class="service-title">Full Service</div>
+                    <div class="service-desc">Interior & exterior detailing by our professional car care specialists.</div>
+                    <div class="service-price">₱350 <span>base price</span></div>
+                    <div class="select-btn" id="btn-full">Select Service →</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- STEP 2 -->
+            <div class="step-title">Vehicle Scale Selection</div>
+            <div class="step-subtitle">Step 2 of 2: Select your vehicle size to finalize the pricing</div>
+
+            <div class="vehicle-grid">
+                <!-- 4 Seater -->
+                <div class="vehicle-card active" id="veh-4" onclick="selectVehicle('4_SEATER')">
+                    <div class="vehicle-title">4-seater</div>
+                    <div class="vehicle-surcharge" id="sur-4">+₱100</div>
+                    <div class="vehicle-desc">SEDAN / HATCHBACK</div>
+                </div>
+
+                <!-- 7 Seater -->
+                <div class="vehicle-card" id="veh-7" onclick="selectVehicle('7_SEATER')">
+                    <div class="vehicle-title">7-seater</div>
+                    <div class="vehicle-surcharge" id="sur-7">+₱130</div>
+                    <div class="vehicle-desc">SUV / MPV</div>
+                </div>
+
+                <!-- >7 Seater -->
+                <div class="vehicle-card" id="veh-max" onclick="selectVehicle('GREATER_THAN_7_SEATER')">
+                    <div class="vehicle-title">>7-seater</div>
+                    <div class="vehicle-surcharge" id="sur-max">+₱160</div>
+                    <div class="vehicle-desc">VAN / LARGE TRUCK</div>
+                </div>
+            </div>
+
+            <div class="action-footer">
+                <div class="total-price-display">
+                    <span>Total Amount (Pay on arrival)</span>
+                    <div id="totalDisplay">₱350</div>
+                </div>
+                <div>
+                    <button class="btn-secondary" onclick="window.history.back()" style="margin-right: 12px; padding: 14px 24px;">Cancel</button>
+                    <button class="btn-primary" id="confirmBookingBtn" style="padding: 14px 32px; font-size: 16px;">Confirm Booking</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Receipt Modal -->
+    <div id="receiptModal">
+        <div class="receipt-card">
+            <div class="receipt-header">Booking Confirmed!</div>
+            <div class="receipt-sub">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM8 15L3 10L4.41 8.59L8 12.17L15.59 4.58L17 6L8 15Z" fill="#10B981"/>
+                </svg>
+                Your slot is locked in.
+            </div>
+
+            <div class="priority-box">
+                <div class="priority-label">Your Priority Number</div>
+                <div class="priority-number" id="receiptPriority">CR-X-XXXX-XX</div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">Present this to the receptionist upon arrival</div>
+            </div>
+
+            <div class="info-row">
+                <strong>Schedule:</strong>
+                <span id="receiptSchedule">--</span>
+            </div>
+            <div class="info-row">
+                <strong>Service & Vehicle:</strong>
+                <span id="receiptService">--</span>
+            </div>
+            <div class="info-row" style="border-bottom: none;">
+                <strong>Total Amount:</strong>
+                <span id="receiptTotal" style="color: #2563eb; font-weight: 700;">--</span>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; margin-top: 24px;" onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        // Global Data Mapping
+        const SLOT_MAP = [
+            { id: 1, time: '08:00 AM' }, { id: 2, time: '09:30 AM' }, { id: 3, time: '11:00 AM' },
+            { id: 4, time: '12:30 PM' }, { id: 5, time: '02:00 PM' }, { id: 6, time: '03:30 PM' },
+            { id: 7, time: '05:00 PM' }, { id: 8, time: '06:30 PM' }, { id: 9, time: '08:00 PM' }
+        ];
+
+        // State variables
+        let state = {
+            serviceType: 'SELF_SERVICE',
+            basePrice: 250,
+            vehicleType: '4_SEATER',
+            totalPrice: 350,
+            date: null,
+            slotId: null
+        };
+
+        // Extract URL Params
+        const urlParams = new URLSearchParams(window.location.search);
+        state.date = urlParams.get('date');
+        state.slotId = parseInt(urlParams.get('slot'));
+
+        if (!state.date || !state.slotId) {
+            alert("No booking time selected. Redirecting to calendar.");
+            window.location.href = 'dashboard.html';
+        }
+
+        const slotDef = SLOT_MAP.find(s => s.id === state.slotId);
+        document.getElementById('bookingContextDisplay').innerText = 
+            `Locking in Booking for: ${state.date} at ${slotDef ? slotDef.time : 'Unknown Time'}`;
+
+        // Surcharge Data
+        const Surcharges = {
+            'SELF_SERVICE': { '4_SEATER': 100, '7_SEATER': 130, 'GREATER_THAN_7_SEATER': 160 },
+            'FULL_SERVICE': { '4_SEATER': 130, '7_SEATER': 160, 'GREATER_THAN_7_SEATER': 190 }
+        };
+
+        function calculateTotal() {
+            const surcharge = Surcharges[state.serviceType][state.vehicleType];
+            state.totalPrice = state.basePrice + surcharge;
+            document.getElementById('totalDisplay').innerText = `₱${state.totalPrice}`;
+            
+            // Update Surcharge Labels to reflect current service offset
+            document.getElementById('sur-4').innerText = `+₱${Surcharges[state.serviceType]['4_SEATER']}`;
+            document.getElementById('sur-7').innerText = `+₱${Surcharges[state.serviceType]['7_SEATER']}`;
+            document.getElementById('sur-max').innerText = `+₱${Surcharges[state.serviceType]['GREATER_THAN_7_SEATER']}`;
+        }
+
+        function selectService(type, price) {
+            state.serviceType = type;
+            state.basePrice = price;
+
+            // UI
+            document.getElementById('service-self').classList.remove('active');
+            document.getElementById('service-full').classList.remove('active');
+            document.getElementById('btn-self').innerText = 'Select Service →';
+            document.getElementById('btn-full').innerText = 'Select Service →';
+
+            if (type === 'SELF_SERVICE') {
+                document.getElementById('service-self').classList.add('active');
+                document.getElementById('btn-self').innerText = 'Selected ✓';
+            } else {
+                document.getElementById('service-full').classList.add('active');
+                document.getElementById('btn-full').innerText = 'Selected ✓';
+            }
+            calculateTotal();
+        }
+
+        function selectVehicle(type) {
+            state.vehicleType = type;
+
+            // UI
+            document.getElementById('veh-4').classList.remove('active');
+            document.getElementById('veh-7').classList.remove('active');
+            document.getElementById('veh-max').classList.remove('active');
+
+            if(type === '4_SEATER') document.getElementById('veh-4').classList.add('active');
+            if(type === '7_SEATER') document.getElementById('veh-7').classList.add('active');
+            if(type === 'GREATER_THAN_7_SEATER') document.getElementById('veh-max').classList.add('active');
+
+            calculateTotal();
+        }
+
+        // Execution
+        document.getElementById('confirmBookingBtn').addEventListener('click', async () => {
+            const userDataString = localStorage.getItem('userProfile');
+            if (!userDataString) {
+                alert("Please log in first."); window.location.href = 'index.html'; return;
+            }
+            const userData = JSON.parse(userDataString);
+
+            const payload = {
+                userId: userData.id,
+                bookingDate: state.date,
+                timeSlot: state.slotId,
+                serviceType: state.serviceType,
+                vehicleType: state.vehicleType,
+                totalPrice: state.totalPrice
+            };
+
+            const btn = document.getElementById('confirmBookingBtn');
+            btn.innerText = 'Processing...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    const priorityNumber = await response.text();
+                    
+                    // Show Receipt
+                    document.getElementById('receiptPriority').innerText = priorityNumber;
+                    document.getElementById('receiptSchedule').innerText = `${state.date} @ ${slotDef.time}`;
+                    const formattedSvc = state.serviceType.replace('_', ' ');
+                    const formattedVeh = state.vehicleType.replace(/_/g, ' ');
+                    document.getElementById('receiptService').innerText = `${formattedSvc} (${formattedVeh})`;
+                    document.getElementById('receiptTotal').innerText = `₱${state.totalPrice}`;
+                    
+                    document.getElementById('receiptModal').style.display = 'flex';
+                } else {
+                    const err = await response.text();
+                    alert("Booking failed: " + err);
+                    btn.innerText = 'Confirm Booking';
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                console.error(e);
+                alert("Critical API connection error.");
+                btn.innerText = 'Confirm Booking';
+                btn.disabled = false;
+            }
+        });
+
+    </script>
+</body>
+</html>

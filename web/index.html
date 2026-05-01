@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>CleanRide - Login</title>
+</head>
+<body>
+    <!-- Animated background bubbles -->
+    <div class="bubble bubble-1"></div>
+    <div class="bubble bubble-2"></div>
+    <div class="bubble bubble-3"></div>
+
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-wrapper">
+                <img src="LOGO.png" alt="CleanRide Logo" class="logo-icon">
+            </div>
+            <h2>CleanRide</h2>
+            <p class="subtitle">Welcome back! Please login.</p>
+        </div>
+        
+        <div id="g_id_onload"
+             data-client_id="550037687488-bl56rpcdltj95pgnk1crsb394dhl1p0p.apps.googleusercontent.com"
+             data-callback="handleGoogleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-width="100%" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left" style="margin-bottom: 20px;"></div>
+        <div style="text-align: center; margin-bottom: 20px; color: #666; font-size: 14px;">--- OR ---</div>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+            <div class="input-group" style="position: relative;">
+                <input type="password" id="password" placeholder="Password" required style="padding-right: 40px; box-sizing: border-box;">
+                <button type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility('password', 'togglePasswordBtn')" style="position: absolute; right: 10px; top: 10px; background: none; border: none; cursor: pointer; color: #64748b; padding: 0; outline: none; display: flex; align-items: center; justify-content: center;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+            </div>
+            <button type="submit" style="margin-top: 10px;">Log In</button>
+        </form>
+        
+        <div class="link-container">
+            <p>Don't have an account?</p>
+            <button class="link-btn" onclick="window.location.href='register.html'" type="button">Create an Account</button>
+        </div>
+    </div>
+
+    <script>
+        async function handleGoogleCredentialResponse(response) {
+            try {
+                const res = await fetch('http://localhost:8081/api/v1/auth/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ credential: response.credential })
+                });
+                if (res.status === 202) {
+                    const googleData = await res.json();
+                    sessionStorage.setItem('googleRegistrationData', JSON.stringify(googleData));
+                    window.location.href = 'register.html';
+                } else if (res.ok) {
+                    const userData = await res.json();
+                    localStorage.setItem('userProfile', JSON.stringify(userData));
+                    alert("Google Login Successful!");
+                    window.location.href = 'dashboard.html';
+                } else {
+                    const result = await res.text();
+                    alert("Google Login Error: " + result);
+                }
+            } catch (error) {
+                alert("Could not connect to the server.");
+            }
+        }
+
+        function togglePasswordVisibility(fieldId, btnId) {
+            const field = document.getElementById(fieldId);
+            const btn = document.getElementById(btnId);
+            const eyeOpenSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>`;
+            const eyeClosedSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                    </svg>`;
+                    
+            if (field.type === "password") {
+                field.type = "text";
+                if(btn) btn.innerHTML = eyeClosedSvg;
+            } else {
+                field.type = "password";
+                if(btn) btn.innerHTML = eyeOpenSvg;
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const loginData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(loginData)
+                });
+                if (response.ok) {
+                    const result = await response.text();
+                    if (result === "ADMIN_LOGIN_SUCCESS") {
+                        alert("Admin Login Successful!");
+                        window.location.href = 'admin_dashboard.html';
+                    } else {
+                        // The backend now returns the User JSON object
+                        const userData = JSON.parse(result);
+                        localStorage.setItem('userProfile', JSON.stringify(userData));
+                        alert("Login Successful!");
+                        window.location.href = 'dashboard.html';
+                    }
+                } else {
+                    const result = await response.text();
+                    alert("Error: " + result);
+                }
+            } catch (error) {
+                alert("Could not connect to the server. Ensure your backend is running on port 8081.");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -29,11 +29,10 @@
         
         <div class="nav-section">
             <div class="nav-title">Management</div>
-            <a href="#" class="nav-link">Overview</a>
-            <a href="#" class="nav-link active">Booking Calendar</a>
-            <a href="#" class="nav-link">Bay Management</a>
-            <a href="#" class="nav-link">Staff</a>
-            <a href="#" class="nav-link">Reports</a>
+            <a href="admin_dashboard.html" class="nav-link active">Booking Calendar</a>
+            <a href="admin_staff.html" class="nav-link">Staff</a>
+            <a href="admin_reviews.html" class="nav-link">Reviews</a>
+            <a href="admin_cancellation_requests.html" class="nav-link">Cancellation Requests</a>
             <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px;"></div>
             <a href="#" class="nav-link" style="color: #ef4444; font-weight: 600;" onclick="logoutAdmin(event)">Log out</a>
         </div>
@@ -51,8 +50,7 @@
                 <p>Manage and monitor real-time availability across all washing bays. View occupancy and schedule high-priority details.</p>
             </div>
             <div class="header-actions">
-                <button class="btn-secondary">Filters</button>
-                <button class="btn-primary" style="background-color: #10b981;">+ Manual Booking</button>
+                <button class="btn-primary" style="background-color: #10b981;" id="btnManualBooking">+ Manual Booking</button>
             </div>
         </div>
 
@@ -103,6 +101,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btnManualBooking').addEventListener('click', () => {
+                if (!currentSelectedSlotId || !currentFormattedDate) {
+                    alert('Please select an available time slot from the calendar first.');
+                    return;
+                }
+                window.location.href = `admin_manual_booking.html?date=${currentFormattedDate}&slot=${currentSelectedSlotId}`;
+            });
+
             // -- Calendar Logic --
             const calendarContainer = document.getElementById('sidebarCalendarContainer');
             const dateDisplay = document.getElementById('selectedDateDisplay');
@@ -114,6 +120,7 @@
             // Global State Variables referencing the slot/bay map
             let currentFormattedDate = null;
             let lastFetchedData = [];
+            let currentSelectedSlotId = null;
 
             function renderCalendar() {
                 calendarContainer.innerHTML = '';
@@ -257,6 +264,7 @@
             ];
 
             async function fetchAdminSlots(date) {
+                currentSelectedSlotId = null; // Re-set selection on new date
                 currentFormattedDate = date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, '0') + "-" + String(date.getDate()).padStart(2, '0');
                 try {
                     const response = await fetch('http://localhost:8081/api/v1/bookings/daily?date=' + currentFormattedDate);
@@ -275,6 +283,9 @@
                 const container = document.getElementById('bookingSlotsContainer');
                 container.innerHTML = '';
                 
+                const now = new Date();
+                const [year, month, day] = currentFormattedDate.split('-');
+                
                 SLOT_MAP.forEach(slotDef => {
                     const apiData = slotDataList.find(s => s.timeSlot === slotDef.id);
                     const occupiedCount = apiData ? apiData.occupiedCount : 0;
@@ -282,9 +293,27 @@
                     const availableCount = 5 - occupiedCount;
                     const isFull = availableCount === 0;
                     
+                    let isPast = false;
+                    const timeMatch = slotDef.time.match(/(\d+):(\d+)\s(AM|PM)/);
+                    if (timeMatch) {
+                        let hours = parseInt(timeMatch[1], 10);
+                        const mins = parseInt(timeMatch[2], 10);
+                        const ampm = timeMatch[3];
+                        if (ampm === 'PM' && hours < 12) hours += 12;
+                        if (ampm === 'AM' && hours === 12) hours = 0;
+                        
+                        const slotEndDateTime = new Date(year, month - 1, day, hours, mins + 90, 0);
+                        if (slotEndDateTime < now) {
+                            isPast = true;
+                        }
+                    }
+                    
+                    const isUnavailable = isFull || isPast;
+                    
                     let badgeClass = "green";
                     let badgeText = "OPEN";
-                    if (occupiedCount >= 5) { badgeClass = "red"; badgeText = "FULL"; }
+                    if (isPast) { badgeClass = "gray"; badgeText = "PASSED"; }
+                    else if (occupiedCount >= 5) { badgeClass = "red"; badgeText = "FULL"; }
                     else if (occupiedCount >= 4) { badgeClass = "gray"; badgeText = "FINAL"; }
                     else if (occupiedCount >= 2) { badgeClass = "yellow"; badgeText = "BUSY"; }
 
@@ -302,20 +331,34 @@
                         }
 
                         if (bayInfo && bayInfo.username) {
-                            const isLocked = isFull ? 'style="background-color: #fee2e2; border-left-color: #ef4444;"' : '';
+                            const isLocked = isUnavailable ? 'style="background-color: #fee2e2; border-left-color: #ef4444;"' : '';
                             const priorityStyle = isFull ? 'style="color:#dc2626;"' : '';
                             bayListHtml += `<div class="admin-bay-item occupied" ${isLocked}><span class="admin-bay-name">Bay ${i}</span><div><span class="admin-bay-user">${bayInfo.username}</span> <span class="admin-bay-priority" ${priorityStyle}>${bayInfo.priorityFormat}</span>${stageBadge}</div></div>`;
                         } else {
                             bayListHtml += `<div class="admin-bay-item"><span class="admin-bay-name">Bay ${i}</span><div><span class="admin-bay-user" style="color:#94a3b8;">Free</span>${stageBadge}</div></div>`;
                         }
                     }
-
+                    
                     const card = document.createElement('div');
-                    card.className = "slot-card " + (isFull ? "locked" : "");
+                    const isSelected = currentSelectedSlotId === slotDef.id;
+                    card.className = "slot-card " + (isUnavailable ? "locked" : "");
+                    
+                    if (isSelected && !isUnavailable) {
+                        card.style.borderColor = '#2563eb';
+                        card.style.boxShadow = '0 0 0 2px rgba(37,99,235,0.2)';
+                        card.style.backgroundColor = '#f8fafc';
+                    }
+                    if (!isUnavailable) {
+                        card.style.cursor = 'pointer';
+                        card.onclick = () => {
+                            currentSelectedSlotId = slotDef.id;
+                            renderAdminSlots(lastFetchedData);
+                        };
+                    }
                     
                     card.innerHTML = `
                         <div class="slot-header">
-                            <div class="slot-time" ${isFull ? 'style="color: #64748b;"' : ''}>${slotDef.time}</div>
+                            <div class="slot-time" ${(isUnavailable && !isPast) ? 'style="color: #64748b;"' : (isPast ? 'style="color: #94a3b8;"' : '')}>${slotDef.time}</div>
                             <div class="badge ${badgeClass}">${badgeText}</div>
                         </div>
                         <div class="slot-label">${slotDef.label}</div>

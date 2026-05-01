@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanRide - My Reviews</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        body {
+            background: #f8fafc;
+            padding: 0;
+            display: flex;
+            align-items: stretch;
+            font-family: 'Inter', sans-serif;
+        }
+        .bubble { display: none; }
+        
+        .main-content {
+            padding: 40px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .header { margin-bottom: 32px; }
+        .header-title h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .receipts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .receipt-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .receipt-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .receipt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed #cbd5e1;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 99px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #dcfce7; 
+            color: #166534;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+        .info-row strong { color: #0f172a; }
+
+        .review-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .stars-display {
+            color: #fbbf24;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .feedback-text {
+            font-size: 13px;
+            color: #475569;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .review-photo {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+            background: white;
+            border-radius: 12px;
+            border: 2px dashed #cbd5e1;
+            grid-column: 1 / -1;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 450px;
+            padding: 32px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .star-rating-input {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .star-rating-input input { display: none; }
+        .star-rating-input label {
+            font-size: 32px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .star-rating-input input:checked ~ label,
+        .star-rating-input label:hover,
+        .star-rating-input label:hover ~ label {
+            color: #fbbf24;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+
+        .modal-actions {
+            display: flex; gap: 12px; margin-top: 24px;
+        }
+        .modal-actions button {
+            flex: 1; padding: 12px; border-radius: 8px;
+            font-size: 14px; font-weight: 600; border: none; cursor: pointer;
+        }
+        .btn-cancel { background: #f1f5f9; color: #475569; }
+        .btn-submit { background: #2563eb; color: white; }
+        .btn-submit:hover { background: #1d4ed8; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" style="width: 250px;">
+        <div class="brand-placeholder" style="cursor: pointer;" onclick="window.location.href='dashboard.html'">
+            <div class="brand-logo"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            CleanRide
+        </div>
+        <div class="nav-section">
+            <div class="nav-title">Main Menu</div>
+
+            <a href="dashboard.html" class="nav-link">Booking Calendar</a>
+            <a href="my_bookings.html" class="nav-link">My Bookings</a>
+            <a href="my_reviews.html" class="nav-link active">My Reviews</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>My Reviews</h1>
+                <p>Provide feedback on your completed service sessions.</p>
+            </div>
+        </div>
+
+        <div class="empty-state" id="loadingState">Loading...</div>
+        
+        <div class="receipts-grid" id="reviewsGrid"></div>
+    </main>
+
+    <!-- Review Modal -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal-container">
+            <div class="modal-title">Write a Review</div>
+            
+            <div class="form-group">
+                <label class="form-label" style="text-align: center;">Rate your experience</label>
+                <div class="star-rating-input">
+                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Additional Feedback</label>
+                <textarea id="feedbackText" class="form-control" rows="4" placeholder="Tell us how we did..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Upload Photo (Optional)</label>
+                <input type="file" id="photoFile" class="form-control" accept="image/*" />
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeReviewModal()">Cancel</button>
+                <button class="btn-submit" onclick="submitReview()">Submit Review</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SLOT_MAP = {
+            1: '08:00 AM', 2: '09:30 AM', 3: '11:00 AM',
+            4: '12:30 PM', 5: '02:00 PM', 6: '03:30 PM',
+            7: '05:00 PM', 8: '06:30 PM', 9: '08:00 PM'
+        };
+
+        const SLOT_HOURS = { 1: 8, 2: 9, 3: 11, 4: 12, 5: 14, 6: 15, 7: 17, 8: 18, 9: 20 };
+        const SLOT_MINUTES = { 1: 0, 2: 30, 3: 0, 4: 30, 5: 0, 6: 30, 7: 0, 8: 30, 9: 0 };
+
+        let currentBookingId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userDataString = localStorage.getItem('userProfile');
+            if (!userDataString) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            const userData = JSON.parse(userDataString);
+            const loadingState = document.getElementById('loadingState');
+            const reviewsGrid = document.getElementById('reviewsGrid');
+
+            try {
+                const [bookingsRes, reviewsRes] = await Promise.all([
+                    fetch(`http://localhost:8081/api/v1/bookings/user/${userData.id}`),
+                    fetch(`http://localhost:8081/api/v1/reviews/user/${userData.id}`)
+                ]);
+
+                if (!bookingsRes.ok || !reviewsRes.ok) throw new Error("API Fetch Error");
+
+                const allBookings = await bookingsRes.json();
+                const allReviews = await reviewsRes.json();
+
+                // Build a map of bookingId -> review
+                const reviewMap = {};
+                allReviews.forEach(r => reviewMap[r.bookingId] = r);
+
+                // Filter only COMPLETED bookings using time-calculation logic
+                const completedBookings = allBookings.filter(b => {
+                    const [year, month, day] = b.bookingDate.split('-');
+                    const scheduledTime = new Date(year, month - 1, day, SLOT_HOURS[b.timeSlot] || 0, SLOT_MINUTES[b.timeSlot] || 0);
+                    const now = new Date();
+                    const endTime = new Date(scheduledTime.getTime() + 90 * 60000);
+
+                    if (b.status !== 'CANCELLED' && b.status !== 'CANCELED') {
+                        if (now >= endTime) {
+                            b.status = 'COMPLETED'; // override locally
+                            return true;
+                        }
+                        if (b.status === 'COMPLETED') return true;
+                    }
+                    return false;
+                });
+
+                loadingState.style.display = 'none';
+
+                if (completedBookings.length === 0) {
+                    reviewsGrid.innerHTML = `
+                        <div class="empty-state">
+                            <h3>No Completed Bookings</h3>
+                            <p>You can only review services after they are completed.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                completedBookings.forEach(booking => {
+                    const formattedSvc = booking.serviceType ? booking.serviceType.replace('_', ' ') : 'Unknown';
+                    const timeStr = SLOT_MAP[booking.timeSlot] || "Unknown Time";
+                    const review = reviewMap[booking.id];
+
+                    let reviewSectionHtml = '';
+                    if (review) {
+                        const starsHtml = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                        const photoHtml = review.photoUrl ? `<img src="http://localhost:8081${review.photoUrl}" class="review-photo" />` : '';
+                        
+                        reviewSectionHtml = `
+                            <div class="review-section">
+                                <div class="stars-display">${starsHtml}</div>
+                                <div class="feedback-text">" ${review.feedback} "</div>
+                                ${photoHtml}
+                            </div>
+                        `;
+                    } else {
+                        reviewSectionHtml = `
+                            <div class="review-section" style="border: none; padding: 0;">
+                                <button class="btn-submit" style="width: 100%; border-radius: 8px; padding: 10px; font-weight: 600; cursor: pointer; border:none; background: #3b82f6; color: white;" onclick="openReviewModal(${booking.id})">Write Review</button>
+                            </div>
+                        `;
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = "receipt-card";
+                    card.innerHTML = `
+                        <div class="receipt-header">
+                            <span style="font-weight: 700; color: #0f172a;">${booking.bookingDate}</span>
+                            <span class="status-badge">Completed</span>
+                        </div>
+                        <div class="info-row"><span>Time</span><strong>${timeStr}</strong></div>
+                        <div class="info-row"><span>Service</span><strong>${formattedSvc}</strong></div>
+                        <div class="info-row"><span>Bay</span><strong>Bay ${booking.bayId || '?'}</strong></div>
+                        ${reviewSectionHtml}
+                    `;
+                    reviewsGrid.appendChild(card);
+                });
+
+            } catch (err) {
+                console.error(err);
+                loadingState.innerHTML = `
+                    <h3 style="color: #ef4444;">Connection Error</h3>
+                    <p>Could not load the data. Backend may be offline.</p>
+                `;
+            }
+        });
+
+        window.openReviewModal = function(bookingId) {
+            currentBookingId = bookingId;
+            document.getElementById('reviewModal').classList.add('active');
+            // reset form
+            const radios = document.getElementsByName('rating');
+            radios.forEach(r => r.checked = false);
+            document.getElementById('feedbackText').value = '';
+            document.getElementById('photoFile').value = '';
+        };
+
+        window.closeReviewModal = function() {
+            currentBookingId = null;
+            document.getElementById('reviewModal').classList.remove('active');
+        };
+
+        window.submitReview = async function() {
+            if (!currentBookingId) return;
+
+            // Get selected rating
+            let ratingVal = null;
+            const radios = document.getElementsByName('rating');
+            for(let radio of radios) {
+                if (radio.checked) ratingVal = radio.value;
+            }
+
+            if (!ratingVal) {
+                alert("Please pick a star rating.");
+                return;
+            }
+
+            const feedbackVal = document.getElementById('feedbackText').value.trim();
+            if (!feedbackVal) {
+                alert("Please add some feedback.");
+                return;
+            }
+
+            const photoInput = document.getElementById('photoFile');
+            const photoFile = photoInput.files[0];
+
+            const formData = new FormData();
+            formData.append('bookingId', currentBookingId);
+            formData.append('rating', ratingVal);
+            formData.append('feedback', feedbackVal);
+            if (photoFile) {
+                formData.append('photo', photoFile);
+            }
+
+            const btn = document.querySelector('.btn-submit');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Submitting...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/reviews/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    const errorTxt = await response.text();
+                    alert("Error submitting review: " + errorTxt);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Network error.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                closeReviewModal();
+            }
+        };
+    </script>
+</body>
+</html>

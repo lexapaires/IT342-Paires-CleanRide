@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanRide - Cancellation Requests</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        body { background: #f8fafc; padding: 0; display: flex; align-items: stretch; font-family: 'Inter', sans-serif;}
+        .bubble { display: none; }
+        .requests-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            padding: 24px;
+        }
+        .request-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .request-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 16px; 
+        }
+        .request-user { font-weight: 700; color: #0f172a; font-size: 16px; }
+        .request-date { font-size: 12px; color: #64748b; font-weight: 600;}
+        .request-priority {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 16px;
+            border: 1px dashed #cbd5e1;
+        }
+        .request-reason-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        .request-reason { 
+            font-size: 14px; 
+            color: #334155; 
+            background: #fef2f2; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border-left: 3px solid #ef4444; 
+            line-height: 1.5;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+        .empty-state { grid-column: 1/-1; text-align: center; padding: 48px; color: #64748b; font-size: 18px; }
+        .request-actions {
+            display: flex;
+            gap: 12px;
+        }
+        .btn-action {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-reject {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .btn-reject:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        .btn-approve {
+            background: #ef4444;
+            color: white;
+        }
+        .btn-approve:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="brand-placeholder">
+            <div class="brand-logo" style="background: linear-gradient(135deg, #10b981, #059669);"><img src="LOGO.png" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"></div>
+            CleanRide <span style="font-size: 10px; background: #fee2e2; color: #dc2626; padding: 2px 6px; border-radius: 4px; margin-left: 4px;">ADMIN</span>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-title">Management</div>
+            <a href="admin_dashboard.html" class="nav-link">Booking Calendar</a>
+            <a href="admin_staff.html" class="nav-link">Staff</a>
+            <a href="admin_reviews.html" class="nav-link">Reviews</a>
+            <a href="admin_cancellation_requests.html" class="nav-link active">Cancellation Requests</a>
+            <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 12px;"></div>
+            <a href="#" class="nav-link" style="color: #ef4444; font-weight: 600;" onclick="logoutAdmin(event)">Log out</a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <div class="header-title">
+                <h1>Cancellation Requests</h1>
+                <p>Review and manage customer cancellation requests submitted within the 1-hour window.</p>
+            </div>
+        </div>
+
+        <div class="requests-container" id="requestsContainer">
+            <div class="empty-state">Loading requests...</div>
+        </div>
+    </main>
+
+    <script>
+        const SLOT_MAP = {
+            1: '08:00 AM', 2: '09:30 AM', 3: '11:00 AM',
+            4: '12:30 PM', 5: '02:00 PM', 6: '03:30 PM',
+            7: '05:00 PM', 8: '06:30 PM', 9: '08:00 PM'
+        };
+
+        document.addEventListener('DOMContentLoaded', fetchRequests);
+
+        async function fetchRequests() {
+            const container = document.getElementById('requestsContainer');
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/bookings/cancellation-requests');
+                if (!response.ok) throw new Error("Failed to load requests");
+                const requests = await response.json();
+                
+                if (requests.length === 0) {
+                    container.innerHTML = '<div class="empty-state">No pending cancellation requests.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                requests.forEach(req => {
+                    const timeStr = SLOT_MAP[req.timeSlot] || "Unknown Time";
+                    
+                    const el = document.createElement('div');
+                    el.className = 'request-card';
+                    el.innerHTML = `
+                        <div class="request-header">
+                            <span class="request-user">${req.username || 'Customer'}</span>
+                            <span class="request-date">${req.bookingDate} • ${timeStr}</span>
+                        </div>
+                        <div class="request-priority">
+                            ${req.priorityNumber}
+                        </div>
+                        <div class="request-reason-label">Reason for Cancellation</div>
+                        <div class="request-reason">
+                            "${req.reason || 'No reason provided.'}"
+                        </div>
+                        <div class="request-actions">
+                            <button class="btn-action btn-reject" onclick="handleAction(${req.bookingId}, 'reject')">Decline Request</button>
+                            <button class="btn-action btn-approve" onclick="handleAction(${req.bookingId}, 'approve')">Approve Cancel</button>
+                        </div>
+                    `;
+                    container.appendChild(el);
+                });
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<div class="empty-state" style="color: #ef4444;">Failed to connect to server. Ensure backend is running.</div>';
+            }
+        }
+
+        async function handleAction(bookingId, action) {
+            const confirmMsg = action === 'approve' 
+                ? "Are you sure you want to approve this cancellation? The booking will be cancelled."
+                : "Are you sure you want to decline this cancellation? The booking will remain confirmed.";
+            
+            if (!confirm(confirmMsg)) return;
+
+            try {
+                const response = await fetch(`http://localhost:8081/api/v1/bookings/${bookingId}/${action}-cancellation`, {
+                    method: 'POST'
+                });
+                if (response.ok) {
+                    alert('Action successful');
+                    fetchRequests();
+                } else {
+                    const errTxt = await response.text();
+                    alert("Error: " + errTxt);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Network error.");
+            }
+        }
+
+        function logoutAdmin(event) {
+            if(event) event.preventDefault();
+            localStorage.removeItem('userProfile');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

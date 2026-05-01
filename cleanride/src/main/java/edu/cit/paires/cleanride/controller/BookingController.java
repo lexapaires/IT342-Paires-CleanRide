@@ -1,12 +1,15 @@
 package edu.cit.paires.cleanride.controller;
 
 import edu.cit.paires.cleanride.dto.BookingRequest;
+import edu.cit.paires.cleanride.dto.ManualBookingRequest;
 import edu.cit.paires.cleanride.dto.SlotDetailResponse;
 import edu.cit.paires.cleanride.dto.UserBookingResponse;
 import edu.cit.paires.cleanride.entity.Booking;
 import edu.cit.paires.cleanride.entity.User;
+import edu.cit.paires.cleanride.entity.Staff;
 import edu.cit.paires.cleanride.repository.BookingRepository;
 import edu.cit.paires.cleanride.repository.UserRepository;
+import edu.cit.paires.cleanride.repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,9 @@ public class BookingController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private StaffRepository staffRepository;
 
     @PostMapping
     public ResponseEntity<?> createBooking(@RequestBody BookingRequest request) {
@@ -116,9 +122,13 @@ public class BookingController {
                 bd.setBayId(bay);
                 if (b != null) {
                     bd.setBookingId(b.getId());
-                    bd.setUsername(b.getUser().getUsername());
-                    bd.setPriorityFormat(b.getPriorityNumber() != null ? b.getPriorityNumber() : "#P" + String.format("%02d", b.getId()));
+                    bd.setUsername(b.getUsername());
+                    bd.setPriorityFormat(b.getPriorityNumber());
                     bd.setCurrentStageIndex(b.getCurrentStageIndex() != null ? b.getCurrentStageIndex() : 0);
+                    bd.setServiceType(b.getServiceType());
+                    if (b.getAssignedStaff() != null) {
+                        bd.setAssignedStaffName(b.getAssignedStaff().getName());
+                    }
                 }
                 bayDetails.add(bd);
             }
@@ -193,6 +203,27 @@ public class BookingController {
         return ResponseEntity.ok("Booking successfully cancelled");
     }
 
+    @PostMapping("/{bookingId}/request-cancellation")
+    public ResponseEntity<?> requestCancellation(@PathVariable("bookingId") Long bookingId, @RequestBody edu.cit.paires.cleanride.dto.CancellationRequestDto requestDto) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null) {
+            return new ResponseEntity<>("Booking not found", HttpStatus.NOT_FOUND);
+        }
+
+        if (booking.getStatus() == Booking.BookingStatus.CANCELLED || booking.getStatus() == Booking.BookingStatus.CANCELLATION_REQUESTED) {
+            return new ResponseEntity<>("Booking is already cancelled or cancellation requested", HttpStatus.BAD_REQUEST);
+        }
+        if (booking.getStatus() == Booking.BookingStatus.COMPLETED) {
+            return new ResponseEntity<>("Completed booking cannot be cancelled", HttpStatus.BAD_REQUEST);
+        }
+        
+        booking.setStatus(Booking.BookingStatus.CANCELLATION_REQUESTED);
+        booking.setCancellationReason(requestDto.getReason());
+        bookingRepository.save(booking);
+
+        return ResponseEntity.ok("Cancellation request sent to admin");
+    }
+
     @PutMapping("/{bookingId}/stage")
     public ResponseEntity<?> updateBookingStage(@PathVariable("bookingId") Long bookingId, @RequestParam("stageIndex") Integer stageIndex) {
         Booking booking = bookingRepository.findById(bookingId).orElse(null);
@@ -202,5 +233,141 @@ public class BookingController {
         booking.setCurrentStageIndex(stageIndex);
         bookingRepository.save(booking);
         return ResponseEntity.ok("Successfully updated stage");
+    }
+
+    @PutMapping("/{id}/assign-staff")
+    public ResponseEntity<?> assignStaff(@PathVariable Long id, @RequestParam("staffId") Long staffId) {
+        Booking booking = bookingRepository.findById(id).orElse(null);
+        if (booking == null) return ResponseEntity.notFound().build();
+        
+        Staff staff = staffRepository.findById(staffId).orElse(null);
+        if (staff == null) return ResponseEntity.badRequest().body("Staff not found");
+
+        booking.setAssignedStaff(staff);
+        bookingRepository.save(booking);
+        return ResponseEntity.ok("Staff assigned successfully");
+    }
+
+    @PostMapping("/manual")
+    public ResponseEntity<?> createManualBooking(@RequestBody ManualBookingRequest request) {
+        User user = userRepository.findByEmail(request.getEmail()).orElse(null);
+        if (user == null || !user.getUsername().equals(request.getUsername())) {
+            return new ResponseEntity<>("Customer account does not exist please double check the email and username", HttpStatus.BAD_REQUEST);
+        }
+
+        long currentBookings = bookingRepository.countByBookingDateAndTimeSlotAndStatusNot(
+                request.getBookingDate(), request.getTimeSlot(), Booking.BookingStatus.CANCELLED);
+
+        if (currentBookings >= 5) {
+            return new ResponseEntity<>("Time slot is fully booked", HttpStatus.CONFLICT);
+        }
+
+        Booking booking = new Booking();
+        booking.setUser(user);
+        booking.setUsername(user.getUsername());
+        booking.setBookingDate(request.getBookingDate());
+        booking.setTimeSlot(request.getTimeSlot());
+        booking.setCurrentStageIndex(0);
+        
+        List<Booking> existing = bookingRepository.findByBookingDate(request.getBookingDate()).stream()
+                .filter(b -> b.getTimeSlot().equals(request.getTimeSlot()) && b.getStatus() != Booking.BookingStatus.CANCELLED)
+                .collect(Collectors.toList());
+        
+        List<Integer> occupiedBays = existing.stream().map(Booking::getBayId).collect(Collectors.toList());
+        int assignedBay = 1;
+        for (int i = 1; i <= 5; i++) {
+            if (!occupiedBays.contains(i)) {
+                assignedBay = i;
+                break;
+            }
+        }
+        
+        booking.setBayId(assignedBay);
+        booking.setStatus(Booking.BookingStatus.CONFIRMED);
+        booking.setServiceType(request.getServiceType());
+        booking.setVehicleType(request.getVehicleType());
+        booking.setTotalPrice(request.getTotalPrice());
+
+        String timeChar = switch(request.getTimeSlot()) {
+            case 1 -> "8A";
+            case 2 -> "9A";
+            case 3 -> "11A";
+            case 4 -> "12P";
+            case 5 -> "2P";
+            case 6 -> "3P";
+            case 7 -> "5P";
+            case 8 -> "6P";
+            case 9 -> "8P";
+            default -> "0X";
+        };
+        String dateStr = String.format("%02d%02d", request.getBookingDate().getMonthValue(), request.getBookingDate().getDayOfMonth());
+        String priorityString = "CR-M-" + user.getId() + "-" + dateStr + "-" + timeChar;
+        booking.setPriorityNumber(priorityString);
+        
+        bookingRepository.save(booking);
+
+        return new ResponseEntity<>(priorityString, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/cancellation-requests")
+    public ResponseEntity<List<AdminCancellationResponse>> getCancellationRequests() {
+        List<Booking> requests = bookingRepository.findByStatus(Booking.BookingStatus.CANCELLATION_REQUESTED);
+        List<AdminCancellationResponse> responses = requests.stream().map(b -> {
+            AdminCancellationResponse dto = new AdminCancellationResponse();
+            dto.setBookingId(b.getId());
+            dto.setUsername(b.getUsername());
+            dto.setBookingDate(b.getBookingDate().toString());
+            dto.setTimeSlot(b.getTimeSlot());
+            dto.setPriorityNumber(b.getPriorityNumber());
+            dto.setReason(b.getCancellationReason());
+            return dto;
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
+    }
+
+    @PostMapping("/{bookingId}/approve-cancellation")
+    public ResponseEntity<?> approveCancellation(@PathVariable("bookingId") Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null) return ResponseEntity.notFound().build();
+        if (booking.getStatus() != Booking.BookingStatus.CANCELLATION_REQUESTED) {
+            return ResponseEntity.badRequest().body("Booking is not pending cancellation");
+        }
+        booking.setStatus(Booking.BookingStatus.CANCELLED);
+        bookingRepository.save(booking);
+        return ResponseEntity.ok("Cancellation approved");
+    }
+
+    @PostMapping("/{bookingId}/reject-cancellation")
+    public ResponseEntity<?> rejectCancellation(@PathVariable("bookingId") Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null) return ResponseEntity.notFound().build();
+        if (booking.getStatus() != Booking.BookingStatus.CANCELLATION_REQUESTED) {
+            return ResponseEntity.badRequest().body("Booking is not pending cancellation");
+        }
+        booking.setStatus(Booking.BookingStatus.CANCELLATION_DECLINED);
+        bookingRepository.save(booking);
+        return ResponseEntity.ok("Cancellation rejected");
+    }
+
+    public static class AdminCancellationResponse {
+        private Long bookingId;
+        private String username;
+        private String bookingDate;
+        private Integer timeSlot;
+        private String priorityNumber;
+        private String reason;
+
+        public Long getBookingId() { return bookingId; }
+        public void setBookingId(Long bookingId) { this.bookingId = bookingId; }
+        public String getUsername() { return username; }
+        public void setUsername(String username) { this.username = username; }
+        public String getBookingDate() { return bookingDate; }
+        public void setBookingDate(String bookingDate) { this.bookingDate = bookingDate; }
+        public Integer getTimeSlot() { return timeSlot; }
+        public void setTimeSlot(Integer timeSlot) { this.timeSlot = timeSlot; }
+        public String getPriorityNumber() { return priorityNumber; }
+        public void setPriorityNumber(String priorityNumber) { this.priorityNumber = priorityNumber; }
+        public String getReason() { return reason; }
+        public void setReason(String reason) { this.reason = reason; }
     }
 }

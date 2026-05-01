@@ -35,6 +35,10 @@ public class Booking {
     @Column(name = "vehicle_type")
     private String vehicleType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "staff_id")
+    private Staff assignedStaff;
+
     @Column(name = "total_price")
     private Double totalPrice;
 
@@ -51,7 +55,10 @@ public class Booking {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
     
+    @Column(name = "cancellation_reason", length = 500)
+    private String cancellationReason;
+
     public enum BookingStatus {
-        PENDING, ACTIVE, CONFIRMED, COMPLETED, CANCELLED
+        PENDING, ACTIVE, CONFIRMED, COMPLETED, CANCELLED, CANCELLATION_REQUESTED, CANCELLATION_DECLINED
     }
 }

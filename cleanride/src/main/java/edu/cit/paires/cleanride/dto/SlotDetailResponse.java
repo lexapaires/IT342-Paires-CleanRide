@@ -16,5 +16,7 @@ public class SlotDetailResponse {
         private String username;
         private String priorityFormat;
         private Integer currentStageIndex;
+        private String serviceType;
+        private String assignedStaffName;
     }
 }

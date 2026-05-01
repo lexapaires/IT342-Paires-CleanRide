@@ -112,9 +112,10 @@
         
         <div class="nav-section">
             <div class="nav-title">Main Menu</div>
-            <a href="#" class="nav-link">Overview</a>
+
             <a href="dashboard.html" class="nav-link">Booking Calendar</a>
             <a href="my_bookings.html" class="nav-link">My Bookings</a>
+            <a href="my_reviews.html" class="nav-link">My Reviews</a>
             <a href="profile.html" class="nav-link active">Profile</a>
         </div>
     </aside>
@@ -152,6 +153,22 @@
                 <div class="info-value" id="profileEmail">johndoe@example.com</div>
             </div>
 
+            <div class="info-group" id="changePasswordContainer">
+                <div class="info-label">Set / Change Password</div>
+                <div class="info-value">
+                    <div style="position: relative; margin-bottom: 8px;">
+                        <input type="password" id="newPassword" placeholder="Enter new password" style="width: 100%; padding: 8px 40px 8px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-family: inherit; box-sizing: border-box;">
+                        <button type="button" id="toggleProfilePasswordBtn" onclick="toggleProfilePasswordVisibility('newPassword', 'toggleProfilePasswordBtn')" style="position: absolute; right: 10px; top: 10px; background: none; border: none; cursor: pointer; color: #64748b; padding: 0; outline: none; display: flex; align-items: center; justify-content: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button onclick="updatePassword()" style="padding: 8px 16px; background: #2563eb; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: inherit; font-weight: 500;">Save Password</button>
+                </div>
+            </div>
+
             <button class="logout-btn" onclick="logout()">Log out</button>
         </div>
     </main>
@@ -181,11 +198,71 @@
             if (userData.firstName && userData.firstName.length > 0) {
                 document.getElementById('profileInitials').innerText = userData.firstName.charAt(0).toUpperCase();
             }
+
+            // Hide password section if user has already finalized their password
+            if (userData.needsPasswordSetup === false) {
+                document.getElementById('changePasswordContainer').style.display = 'none';
+            }
         });
+
+        function toggleProfilePasswordVisibility(fieldId, btnId) {
+            const field = document.getElementById(fieldId);
+            const btn = document.getElementById(btnId);
+            const eyeOpenSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>`;
+            const eyeClosedSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                    </svg>`;
+                    
+            if (field.type === "password") {
+                field.type = "text";
+                if(btn) btn.innerHTML = eyeClosedSvg;
+            } else {
+                field.type = "password";
+                if(btn) btn.innerHTML = eyeOpenSvg;
+            }
+        }
 
         function logout() {
             localStorage.removeItem('userProfile');
             window.location.href = 'index.html';
+        }
+
+        async function updatePassword() {
+            const newPassword = document.getElementById('newPassword').value;
+            if (!newPassword) {
+                alert('Please enter a new password');
+                return;
+            }
+            const userDataString = localStorage.getItem('userProfile');
+            const userData = JSON.parse(userDataString);
+            
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/auth/password', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: userData.id, newPassword: newPassword })
+                });
+                if (response.ok) {
+                    alert('Password updated successfully! You can now use this password to log in manually.');
+                    document.getElementById('newPassword').value = '';
+                    
+                    // Hide the UI per requirements since they successfully set their password
+                    document.getElementById('changePasswordContainer').style.display = 'none';
+                    
+                    // Update local storage so it stays hidden on refresh
+                    userData.needsPasswordSetup = false;
+                    localStorage.setItem('userProfile', JSON.stringify(userData));
+                    
+                } else {
+                    const result = await response.text();
+                    alert('Error: ' + result);
+                }
+            } catch (error) {
+                alert('Could not connect to the server.');
+            }
         }
     </script>
 

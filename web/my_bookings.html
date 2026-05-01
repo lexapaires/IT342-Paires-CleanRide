@@ -78,13 +78,15 @@
         .status-ongoing { background: #e0e7ff; color: #3730a3; }
         .status-completed { background: #dcfce7; color: #166534; }
         .status-canceled, .status-cancelled { background: #fee2e2; color: #991b1b; }
+        .status-cancellation_requested { background: #ffedd5; color: #c2410c; }
+        .status-cancellation_declined { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
 
         .priority-box {
             background: #f1f5f9;
             border: 2px dashed #cbd5e1;
             padding: 12px;
             border-radius: 8px;
-            text-align: center;
+            text-align: left;
             margin-bottom: 20px;
         }
 
@@ -144,6 +146,31 @@
         .empty-state h3 {
             color: #0f172a;
             margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 32px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+            text-align: left;
+        }
+        
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        .empty-section {
+            grid-column: 1 / -1;
+            padding: 24px;
+            text-align: left;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px dashed #cbd5e1;
+            font-size: 14px;
         }
 
         /* Modal Styles */
@@ -259,9 +286,10 @@
         </div>
         <div class="nav-section">
             <div class="nav-title">Main Menu</div>
-            <a href="dashboard.html" class="nav-link">Overview</a>
+
             <a href="dashboard.html" class="nav-link">Booking Calendar</a>
             <a href="my_bookings.html" class="nav-link active">My Bookings</a>
+            <a href="my_reviews.html" class="nav-link">My Reviews</a>
             <a href="profile.html" class="nav-link">Profile</a>
         </div>
 
@@ -281,11 +309,22 @@
             </div>
         </div>
 
-        <div class="receipts-grid" id="bookingsGrid">
-            <div class="empty-state" style="display: none;" id="loadingState">
-                Loading your bookings...
-            </div>
+        <div class="empty-state" id="loadingState">
+            Loading your bookings...
         </div>
+        
+        <div id="bookingsSections" style="display: none;">
+            <h2 class="section-title">Ongoing Bookings</h2>
+            <div class="receipts-grid" id="ongoingBookingsGrid"></div>
+
+            <h2 class="section-title">Completed Bookings</h2>
+            <div class="receipts-grid" id="completedBookingsGrid"></div>
+
+            <h2 class="section-title">Cancelled Bookings</h2>
+            <div class="receipts-grid" id="cancelledBookingsGrid"></div>
+        </div>
+
+        <div class="receipts-grid" id="emptyStateContainer"></div>
     </main>
 
     <!-- Cancellation Modal Overlay -->
@@ -309,6 +348,28 @@
         </div>
     </div>
 
+    <!-- Request Cancellation Modal Overlay -->
+    <div class="modal-overlay" id="requestCancelModal">
+        <div class="modal-container">
+            <div class="modal-icon" style="background: #fef3c7; color: #d97706;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            </div>
+            <div class="modal-content">
+                <h3>Request Cancellation</h3>
+                <p>This booking is within 1 hour of its scheduled time. Please state a valid reason to request a cancellation from the administrator.</p>
+                <textarea id="cancellationReason" style="width: 100%; border-radius: 8px; border: 1px solid #cbd5e1; padding: 12px; margin-bottom: 24px; font-family: inherit; font-size: 14px;" rows="4" placeholder="Enter reason here..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeRequestCancelModal()">Nevermind</button>
+                <button class="btn-confirm" style="background: #f59e0b; box-shadow: none;" id="btnConfirmRequestCancel" onclick="confirmRequestCancelBooking()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const SLOT_MAP = {
             1: '08:00 AM', 2: '09:30 AM', 3: '11:00 AM',
@@ -328,18 +389,26 @@
             initUserLiveTracker();
             
             const userData = JSON.parse(userDataString);
-            const grid = document.getElementById('bookingsGrid');
+            const loadingState = document.getElementById('loadingState');
+            const sectionsContainer = document.getElementById('bookingsSections');
+            const emptyContainer = document.getElementById('emptyStateContainer');
+            const ongoingGrid = document.getElementById('ongoingBookingsGrid');
+            const completedGrid = document.getElementById('completedBookingsGrid');
+            const cancelledGrid = document.getElementById('cancelledBookingsGrid');
 
-            grid.innerHTML = '<div class="empty-state" id="loadingState">Loading your bookings...</div>';
+            loadingState.style.display = 'block';
+            sectionsContainer.style.display = 'none';
+            emptyContainer.innerHTML = '';
 
             try {
                 const response = await fetch(`http://localhost:8081/api/v1/bookings/user/${userData.id}`);
                 if (!response.ok) throw new Error("Failed to load bookings");
                 
                 const bookings = await response.json();
+                loadingState.style.display = 'none';
                 
                 if (bookings.length === 0) {
-                    grid.innerHTML = `
+                    emptyContainer.innerHTML = `
                         <div class="empty-state">
                             <h3>No bookings found</h3>
                             <p>You haven't made any carwash reservations yet.</p>
@@ -349,7 +418,14 @@
                     return;
                 }
 
-                grid.innerHTML = '';
+                sectionsContainer.style.display = 'block';
+                ongoingGrid.innerHTML = '';
+                completedGrid.innerHTML = '';
+                cancelledGrid.innerHTML = '';
+
+                let ongoingCount = 0;
+                let completedCount = 0;
+                let cancelledCount = 0;
                 
                 bookings.forEach(booking => {
                     const [year, month, day] = booking.bookingDate.split('-');
@@ -363,7 +439,9 @@
                         } else if (now >= scheduledTime && now < endTime) {
                             booking.status = 'ONGOING';
                         } else {
-                            booking.status = 'CONFIRMED';
+                            if (booking.status !== 'CANCELLATION_REQUESTED' && booking.status !== 'CANCELLATION_DECLINED') {
+                                booking.status = 'CONFIRMED';
+                            }
                         }
                     } else {
                         booking.status = 'CANCELED';
@@ -373,10 +451,16 @@
                     const formattedSvc = booking.serviceType ? booking.serviceType.replace('_', ' ') : 'Unknown';
                     const formattedVeh = booking.vehicleType ? booking.vehicleType.replace(/_/g, ' ') : 'Unknown';
                     const timeStr = SLOT_MAP[booking.timeSlot] || "Unknown Time";
+                    let displayStatus = booking.status.replace('_', ' ');
+                    if (booking.status === 'CANCELED' && booking.cancellationReason) {
+                        displayStatus = "APPROVED CANCEL";
+                    } else if (booking.status === 'CANCELLATION_DECLINED') {
+                        displayStatus = "DECLINED CANCEL";
+                    }
 
                     let cancelBtnHtml = '';
                     if (booking.status === 'CONFIRMED') {
-                        cancelBtnHtml = `<button class="btn-secondary" style="margin-top: 16px; width: 100%; color: #dc2626; border-color: #fecaca; background: #fef2f2; font-weight: 600; padding: 10px; cursor: pointer;" onclick="cancelBooking(${booking.id})">Cancel Booking</button>`;
+                        cancelBtnHtml = `<button class="btn-secondary" style="margin-top: 16px; width: 100%; color: #dc2626; border-color: #fecaca; background: #fef2f2; font-weight: 600; padding: 10px; cursor: pointer;" onclick="cancelBooking(${booking.id}, '${booking.bookingDate}', ${booking.timeSlot})">Cancel Booking</button>`;
                     }
                     
                     const card = document.createElement('div');
@@ -384,7 +468,7 @@
                     card.innerHTML = `
                         <div class="receipt-header">
                             <span style="font-weight: 700; color: #0f172a;">${booking.bookingDate}</span>
-                            <span class="status-badge ${statusClass}">${booking.status}</span>
+                            <span class="status-badge ${statusClass}">${displayStatus}</span>
                         </div>
                         
                         <div class="priority-box">
@@ -412,12 +496,33 @@
                         </div>
                         ${cancelBtnHtml}
                     `;
-                    grid.appendChild(card);
+                    
+                    if (booking.status === 'COMPLETED') {
+                        completedGrid.appendChild(card);
+                        completedCount++;
+                    } else if (booking.status === 'CANCELED' || booking.status === 'CANCELLED') {
+                        cancelledGrid.appendChild(card);
+                        cancelledCount++;
+                    } else {
+                        ongoingGrid.appendChild(card);
+                        ongoingCount++;
+                    }
                 });
+
+                if (ongoingCount === 0) {
+                    ongoingGrid.innerHTML = '<div class="empty-section">No ongoing bookings.</div>';
+                }
+                if (completedCount === 0) {
+                    completedGrid.innerHTML = '<div class="empty-section">No completed bookings.</div>';
+                }
+                if (cancelledCount === 0) {
+                    cancelledGrid.innerHTML = '<div class="empty-section">No cancelled bookings.</div>';
+                }
 
             } catch (error) {
                 console.error(error);
-                grid.innerHTML = `
+                loadingState.style.display = 'none';
+                emptyContainer.innerHTML = `
                     <div class="empty-state">
                         <h3 style="color: #ef4444;">Connection Error</h3>
                         <p>Could not connect to the Backend API. Make sure Spring Boot is running.</p>
@@ -485,14 +590,30 @@
 
         let bookingIdToCancel = null;
 
-        window.cancelBooking = function(bookingId) {
+        window.cancelBooking = function(bookingId, dateStr, timeSlot) {
+            const [year, month, day] = dateStr.split('-');
+            const scheduledTime = new Date(year, month - 1, day, SLOT_HOURS[timeSlot] || 0, SLOT_MINUTES[timeSlot] || 0);
+            const now = new Date();
+            const timeDiffHours = (scheduledTime.getTime() - now.getTime()) / 3600000;
+            
             bookingIdToCancel = bookingId;
-            document.getElementById('cancelModal').classList.add('active');
+            
+            if (timeDiffHours <= 1.0) {
+                document.getElementById('cancellationReason').value = '';
+                document.getElementById('requestCancelModal').classList.add('active');
+            } else {
+                document.getElementById('cancelModal').classList.add('active');
+            }
         };
 
         window.closeCancelModal = function() {
             bookingIdToCancel = null;
             document.getElementById('cancelModal').classList.remove('active');
+        };
+
+        window.closeRequestCancelModal = function() {
+            bookingIdToCancel = null;
+            document.getElementById('requestCancelModal').classList.remove('active');
         };
 
         window.confirmCancelBooking = async function() {
@@ -519,6 +640,43 @@
                 console.error(err);
                 alert("Network error. Please try again.");
                 closeCancelModal();
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        window.confirmRequestCancelBooking = async function() {
+            if (!bookingIdToCancel) return;
+            const reason = document.getElementById('cancellationReason').value.trim();
+            if (!reason) {
+                alert("Please provide a reason for cancellation.");
+                return;
+            }
+            
+            const btn = document.getElementById('btnConfirmRequestCancel');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Sending...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/bookings/' + bookingIdToCancel + '/request-cancellation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ reason: reason })
+                });
+                
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    const errorTxt = await response.text();
+                    alert("Error: " + errorTxt);
+                    closeRequestCancelModal();
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Network error.");
+                closeRequestCancelModal();
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;

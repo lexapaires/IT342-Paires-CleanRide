@@ -5,9 +5,6 @@
 [INFO]   from pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- clean:3.4.1:clean (default-clean) @ cleanride ---
-[INFO] Deleting /Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride/target
-[INFO] 
 [INFO] >>> spring-boot:3.5.11:run (default-cli) > test-compile @ cleanride >>>
 [INFO] 
 [INFO] --- resources:3.3.1:resources (default-resources) @ cleanride ---
@@ -15,15 +12,13 @@
 [INFO] Copying 0 resource from src/main/resources to target/classes
 [INFO] 
 [INFO] --- compiler:3.14.1:compile (default-compile) @ cleanride ---
-[INFO] Recompiling the module because of changed source code.
-[INFO] Compiling 11 source files with javac [debug parameters release 17] to target/classes
+[INFO] Nothing to compile - all classes are up to date.
 [INFO] 
 [INFO] --- resources:3.3.1:testResources (default-testResources) @ cleanride ---
 [INFO] skip non existing resourceDirectory /Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride/src/test/resources
 [INFO] 
 [INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ cleanride ---
-[INFO] Recompiling the module because of changed dependency.
-[INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+[INFO] Nothing to compile - all classes are up to date.
 [INFO] 
 [INFO] <<< spring-boot:3.5.11:run (default-cli) < test-compile @ cleanride <<<
 [INFO] 
@@ -40,24 +35,24 @@
 
  :: Spring Boot ::               (v3.5.11)
 
-2026-03-19T13:21:51.676+08:00  INFO 28927 --- [           main] e.c.p.cleanride.CleanrideApplication     : Starting CleanrideApplication using Java 23.0.1 with PID 28927 (/Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride/target/classes started by alexa in /Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride)
-2026-03-19T13:21:51.679+08:00  INFO 28927 --- [           main] e.c.p.cleanride.CleanrideApplication     : No active profile set, falling back to 1 default profile: "default"
-2026-03-19T13:21:53.035+08:00  INFO 28927 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-03-19T13:21:53.118+08:00  INFO 28927 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70 ms. Found 2 JPA repository interfaces.
-2026-03-19T13:21:53.921+08:00  INFO 28927 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8083 (http)
-2026-03-19T13:21:53.947+08:00  INFO 28927 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-03-19T13:21:53.947+08:00  INFO 28927 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.52]
-2026-03-19T13:21:54.011+08:00  INFO 28927 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-03-19T13:21:54.012+08:00  INFO 28927 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2249 ms
-2026-03-19T13:21:54.282+08:00  INFO 28927 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-03-19T13:21:54.371+08:00  INFO 28927 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.42.Final
-2026-03-19T13:21:54.418+08:00  INFO 28927 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-03-19T13:21:54.834+08:00  INFO 28927 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-03-19T13:21:54.883+08:00  INFO 28927 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-03-19T13:21:56.424+08:00  INFO 28927 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@70d5d96b
-2026-03-19T13:21:56.426+08:00  INFO 28927 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-03-19T13:21:56.549+08:00  WARN 28927 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2026-03-19T13:21:56.816+08:00  INFO 28927 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2026-04-14T12:00:47.112+08:00  INFO 10749 --- [           main] e.c.p.cleanride.CleanrideApplication     : Starting CleanrideApplication using Java 23.0.1 with PID 10749 (/Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride/target/classes started by alexa in /Users/alexa/Desktop/CR/IT342-Paires-CleanRide/cleanride)
+2026-04-14T12:00:47.118+08:00  INFO 10749 --- [           main] e.c.p.cleanride.CleanrideApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-04-14T12:00:48.407+08:00  INFO 10749 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-14T12:00:48.528+08:00  INFO 10749 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 104 ms. Found 3 JPA repository interfaces.
+2026-04-14T12:00:49.595+08:00  INFO 10749 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8083 (http)
+2026-04-14T12:00:49.614+08:00  INFO 10749 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-14T12:00:49.614+08:00  INFO 10749 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.52]
+2026-04-14T12:00:49.694+08:00  INFO 10749 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-04-14T12:00:49.696+08:00  INFO 10749 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2480 ms
+2026-04-14T12:00:49.958+08:00  INFO 10749 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-04-14T12:00:50.046+08:00  INFO 10749 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.42.Final
+2026-04-14T12:00:50.097+08:00  INFO 10749 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-04-14T12:00:50.582+08:00  INFO 10749 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-14T12:00:50.619+08:00  INFO 10749 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-14T12:00:52.023+08:00  INFO 10749 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@534762ed
+2026-04-14T12:00:52.025+08:00  INFO 10749 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-14T12:00:52.173+08:00  WARN 10749 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-14T12:00:52.488+08:00  INFO 10749 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 17.6
@@ -65,49 +60,409 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-03-19T13:21:58.019+08:00  INFO 28927 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-03-19T13:21:58.823+08:00  INFO 28927 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19T13:21:59.281+08:00  WARN 28927 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-03-19T13:21:59.335+08:00 TRACE 28927 --- [           main] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration$WebSecurityEnablerConfiguration=org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration$WebSecurityEnablerConfiguration@6413eeb7}
-2026-03-19T13:21:59.363+08:00  WARN 28927 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+2026-04-14T12:00:54.182+08:00  INFO 10749 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-14T12:00:55.751+08:00  INFO 10749 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-14T12:00:56.346+08:00  WARN 10749 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-14T12:00:56.394+08:00 TRACE 10749 --- [           main] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration$WebSecurityEnablerConfiguration=org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration$WebSecurityEnablerConfiguration@46ab8e4b}
+2026-04-14T12:00:56.400+08:00  WARN 10749 --- [           main] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: fff2d5c3-5aca-4bae-b34d-5ce417a4be8e
+Using generated security password: 5a1ccd5e-206f-4f97-bad2-1c990f823b25
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2026-03-19T13:21:59.377+08:00  INFO 28927 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2026-03-19T13:21:59.707+08:00 DEBUG 28927 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
-2026-03-19T13:21:59.973+08:00  INFO 28927 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8083 (http) with context path '/'
-2026-03-19T13:21:59.983+08:00  INFO 28927 --- [           main] e.c.p.cleanride.CleanrideApplication     : Started CleanrideApplication in 8.932 seconds (process running for 9.675)
-2026-03-19T13:22:12.583+08:00  INFO 28927 --- [nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-03-19T13:22:12.583+08:00  INFO 28927 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-03-19T13:22:12.584+08:00  INFO 28927 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2026-03-19T13:22:12.606+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'filterChain' in [class path resource [edu/cit/paires/cleanride/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, ExceptionTranslation, Authorization] (1/1)
-2026-03-19T13:22:12.606+08:00 DEBUG 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/v1/bookings/daily?date=2026-03-19
-2026-03-19T13:22:12.607+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
-2026-03-19T13:22:12.608+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
-2026-03-19T13:22:12.610+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
-2026-03-19T13:22:12.612+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
-2026-03-19T13:22:12.617+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/11)
-2026-03-19T13:22:12.617+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (6/11)
-2026-03-19T13:22:12.618+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
-2026-03-19T13:22:12.618+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (7/11)
-2026-03-19T13:22:12.650+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.s.w.s.HttpSessionRequestCache        : matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
-2026-03-19T13:22:12.650+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (8/11)
-2026-03-19T13:22:12.651+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (9/11)
-2026-03-19T13:22:12.652+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
-2026-03-19T13:22:12.652+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
-2026-03-19T13:22:12.653+08:00 TRACE 28927 --- [nio-8083-exec-1] estMatcherDelegatingAuthorizationManager : Authorizing GET /api/v1/bookings/daily?date=2026-03-19
-2026-03-19T13:22:12.656+08:00 TRACE 28927 --- [nio-8083-exec-1] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /api/v1/bookings/daily?date=2026-03-19 using org.springframework.security.authorization.SingleResultAuthorizationManager@774afaad
-2026-03-19T13:22:12.657+08:00 DEBUG 28927 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/v1/bookings/daily?date=2026-03-19
-Hibernate: select b1_0.id,b1_0.bay_id,b1_0.booking_date,b1_0.created_at,b1_0.priority_number,b1_0.service_type,b1_0.status,b1_0.time_slot,b1_0.total_price,b1_0.user_id,b1_0.vehicle_type from bookings b1_0 where b1_0.booking_date=?
-2026-03-19T13:22:13.200+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
-2026-03-19T13:22:13.203+08:00 TRACE 28927 --- [nio-8083-exec-1] w.c.HttpSessionSecurityContextRepository : No HttpSession currently exists
-2026-03-19T13:22:13.203+08:00 TRACE 28927 --- [nio-8083-exec-1] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
-2026-03-19T13:22:13.203+08:00 TRACE 28927 --- [nio-8083-exec-1] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
-2026-03-19T13:22:13.204+08:00 TRACE 28927 --- [nio-8083-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
-2026-03-19T13:27:55.056+08:00  INFO 28927 --- [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
-2026-03-19T13:27:55.068+08:00  INFO 28927 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
-2026-03-19T13:27:55.075+08:00  INFO 28927 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2026-03-19T13:27:55.080+08:00  INFO 28927 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2026-03-19T13:27:55.421+08:00  INFO 28927 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-14T12:00:56.422+08:00  INFO 10749 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-04-14T12:00:56.810+08:00 DEBUG 10749 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-04-14T12:00:57.150+08:00  INFO 10749 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8083 (http) with context path '/'
+2026-04-14T12:00:57.163+08:00  INFO 10749 --- [           main] e.c.p.cleanride.CleanrideApplication     : Started CleanrideApplication in 10.864 seconds (process running for 11.45)
+✅ Successfully removed outdated status check constraint!
+2026-04-14T12:00:59.237+08:00  INFO 10749 --- [nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-14T12:00:59.239+08:00  INFO 10749 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-14T12:00:59.245+08:00  INFO 10749 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-04-14T12:00:59.278+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'filterChain' in [class path resource [edu/cit/paires/cleanride/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, ExceptionTranslation, Authorization] (1/1)
+2026-04-14T12:00:59.279+08:00 DEBUG 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/v1/bookings/user/1
+2026-04-14T12:00:59.280+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2026-04-14T12:00:59.281+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2026-04-14T12:00:59.285+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2026-04-14T12:00:59.286+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2026-04-14T12:00:59.288+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/11)
+2026-04-14T12:00:59.288+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (6/11)
+2026-04-14T12:00:59.289+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2026-04-14T12:00:59.289+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (7/11)
+2026-04-14T12:00:59.289+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.s.w.s.HttpSessionRequestCache        : matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+2026-04-14T12:00:59.289+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (8/11)
+2026-04-14T12:00:59.290+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (9/11)
+2026-04-14T12:00:59.291+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2026-04-14T12:00:59.291+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2026-04-14T12:00:59.292+08:00 TRACE 10749 --- [nio-8083-exec-1] estMatcherDelegatingAuthorizationManager : Authorizing GET /api/v1/bookings/user/1
+2026-04-14T12:00:59.294+08:00 TRACE 10749 --- [nio-8083-exec-1] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /api/v1/bookings/user/1 using org.springframework.security.authorization.SingleResultAuthorizationManager@c123ff8
+2026-04-14T12:00:59.294+08:00 DEBUG 10749 --- [nio-8083-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/v1/bookings/user/1
+Hibernate: select b1_0.id,b1_0.bay_id,b1_0.booking_date,b1_0.created_at,b1_0.current_stage_index,b1_0.priority_number,b1_0.service_type,b1_0.status,b1_0.time_slot,b1_0.total_price,b1_0.user_id,b1_0.username,b1_0.vehicle_type from bookings b1_0 left join users u1_0 on u1_0.id=b1_0.user_id where u1_0.id=? order by b1_0.booking_date desc
+2026-04-14T12:00:59.872+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2026-04-14T12:00:59.875+08:00 TRACE 10749 --- [nio-8083-exec-1] w.c.HttpSessionSecurityContextRepository : No HttpSession currently exists
+2026-04-14T12:00:59.876+08:00 TRACE 10749 --- [nio-8083-exec-1] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-04-14T12:00:59.876+08:00 TRACE 10749 --- [nio-8083-exec-1] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-04-14T12:00:59.879+08:00 TRACE 10749 --- [nio-8083-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2026-04-14T12:00:59.903+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'filterChain' in [class path resource [edu/cit/paires/cleanride/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, ExceptionTranslation, Authorization] (1/1)
+2026-04-14T12:00:59.903+08:00 DEBUG 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/v1/reviews/user/1
+2026-04-14T12:00:59.903+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/11)
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (6/11)
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (7/11)
+2026-04-14T12:00:59.904+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.s.w.s.HttpSessionRequestCache        : matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+2026-04-14T12:00:59.905+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (8/11)
+2026-04-14T12:00:59.905+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (9/11)
+2026-04-14T12:00:59.905+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2026-04-14T12:00:59.905+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2026-04-14T12:00:59.905+08:00 TRACE 10749 --- [nio-8083-exec-2] estMatcherDelegatingAuthorizationManager : Authorizing GET /api/v1/reviews/user/1
+2026-04-14T12:00:59.908+08:00 TRACE 10749 --- [nio-8083-exec-2] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /api/v1/reviews/user/1 using org.springframework.security.authorization.SingleResultAuthorizationManager@c123ff8
+2026-04-14T12:00:59.908+08:00 DEBUG 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/v1/reviews/user/1
+2026-04-14T12:00:59.924+08:00 TRACE 10749 --- [nio-8083-exec-2] w.c.HttpSessionSecurityContextRepository : No HttpSession currently exists
+2026-04-14T12:00:59.924+08:00 TRACE 10749 --- [nio-8083-exec-2] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-04-14T12:00:59.924+08:00 TRACE 10749 --- [nio-8083-exec-2] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-04-14T12:00:59.924+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2026-04-14T12:00:59.927+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2026-04-14T12:00:59.928+08:00 ERROR 10749 --- [nio-8083-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.] with root cause
+
+java.lang.IllegalArgumentException: Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.updateNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:186) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.getNamedValueInfo(AbstractNamedValueMethodArgumentResolver.java:161) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:107) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:227) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:181) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.52.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.52.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.5.8.jar:6.5.8]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319) ~[spring-security-config-6.5.8.jar:6.5.8]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267) ~[spring-webmvc-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240) ~[spring-security-config-6.5.8.jar:6.5.8]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.16.jar:6.2.16]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1775) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.52.jar:10.1.52]
+	at java.base/java.lang.Thread.run(Thread.java:1575) ~[na:na]
+
+2026-04-14T12:00:59.963+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain defined as 'filterChain' in [class path resource [edu/cit/paires/cleanride/config/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, ExceptionTranslation, Authorization] (1/1)
+2026-04-14T12:00:59.964+08:00 DEBUG 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-04-14T12:00:59.964+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/11)
+2026-04-14T12:00:59.964+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/11)
+2026-04-14T12:00:59.964+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/11)
+2026-04-14T12:00:59.964+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/11)
+2026-04-14T12:00:59.964+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/11)
+2026-04-14T12:00:59.964+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (6/11)
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (7/11)
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.s.w.s.HttpSessionRequestCache        : matchingRequestParameterName is required for getMatchingRequest to lookup a value, but not provided
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (8/11)
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (9/11)
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (10/11)
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (11/11)
+2026-04-14T12:00:59.965+08:00 TRACE 10749 --- [nio-8083-exec-2] estMatcherDelegatingAuthorizationManager : Authorizing GET /error
+2026-04-14T12:00:59.966+08:00 TRACE 10749 --- [nio-8083-exec-2] estMatcherDelegatingAuthorizationManager : Checking authorization on GET /error using org.springframework.security.authorization.SingleResultAuthorizationManager@c123ff8
+2026-04-14T12:00:59.966+08:00 DEBUG 10749 --- [nio-8083-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /error
+2026-04-14T12:00:59.985+08:00 TRACE 10749 --- [nio-8083-exec-2] w.c.HttpSessionSecurityContextRepository : No HttpSession currently exists
+2026-04-14T12:00:59.985+08:00 TRACE 10749 --- [nio-8083-exec-2] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-04-14T12:00:59.985+08:00 TRACE 10749 --- [nio-8083-exec-2] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+2026-04-14T12:00:59.985+08:00 TRACE 10749 --- [nio-8083-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to AnonymousAuthenticationToken [Principal=anonymousUser, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_ANONYMOUS]]
+2026-04-14T12:27:42.022+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m49s409ms).
+2026-04-14T12:27:56.709+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@792acea6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T12:28:06.712+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@534762ed (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T12:28:28.911+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@61444452 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T12:33:12.633+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m30s555ms).
+2026-04-14T12:50:59.323+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s620ms).
+2026-04-14T12:51:00.863+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@16c4572d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T12:51:23.651+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@66d0a3e0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:01:06.502+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6a4f26fc (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:01:16.632+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m47s273ms).
+2026-04-14T13:01:33.963+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@54978a9f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:11:02.043+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2aee59b6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:11:02.878+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s247ms).
+2026-04-14T13:11:24.653+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2a17f7c2 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:11:39.435+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@647a3f63 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:21:19.715+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s292ms).
+2026-04-14T13:21:45.953+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@51a9a4ad (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:21:52.140+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@573a8233 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:31:35.861+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@20446897 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:31:35.968+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s152ms).
+2026-04-14T13:31:52.348+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@30308c7b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:41:21.382+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m45s414ms).
+2026-04-14T13:41:21.987+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2e01afb9 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:41:57.020+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6cd14452 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:51:28.404+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@71e08295 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T13:51:36.994+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m45s349ms).
+2026-04-14T13:51:48.346+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7dea5dab (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:01:32.505+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@26e2c22a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:01:45.234+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@699f00a5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:01:53.427+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s33ms).
+2026-04-14T14:11:40.707+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m47s280ms).
+2026-04-14T14:11:41.924+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1243e2d9 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:12:01.676+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7dd7ccb8 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:21:48.027+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@561001a6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:22:03.082+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1a2fecc6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:22:03.083+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m51s878ms).
+2026-04-14T14:22:29.434+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@541db7e7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:31:50.344+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m47s261ms).
+2026-04-14T14:32:16.761+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1a0eb242 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:32:26.767+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@152c4d1c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:42:15.290+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s522ms).
+2026-04-14T14:42:34.607+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@14565159 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:42:34.609+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@746a479e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T14:52:03.020+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m47s730ms).
+2026-04-14T15:02:12.727+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@24196256 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:02:13.122+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4c860683 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:02:15.981+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6a76fe3a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:02:20.528+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s988ms).
+2026-04-14T15:02:47.367+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5922af0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:02:48.829+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Retrograde clock change detected (housekeeper delta=28s301ms), soft-evicting connections from pool.
+2026-04-14T15:12:37.324+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s494ms).
+2026-04-14T15:22:53.869+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s550ms).
+2026-04-14T15:23:06.865+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2bb7b86a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:23:09.881+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@220aaa1b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:32:34.873+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2be36eb6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:32:36.157+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@43fb87e1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:32:49.849+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3456a7f7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T15:32:49.853+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m55s984ms).
+2026-04-14T15:42:37.022+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m47s169ms).
+2026-04-14T15:50:53.428+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@292228d5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:00:13.239+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2b71b754 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:00:16.700+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m9s443ms).
+2026-04-14T16:00:19.982+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@56de258b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:00:34.543+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@14ea475f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:00:44.635+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@15520027 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:10:33.426+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s638ms).
+2026-04-14T16:20:34.557+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2be64925 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:20:54.866+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@20f569e2 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:21:04.870+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5584e2a6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:21:04.871+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m1s371ms).
+2026-04-14T16:21:04.872+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6399791f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:21:04.873+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3eddf98d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:30:51.356+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s485ms).
+2026-04-14T16:40:36.760+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m45s404ms).
+2026-04-14T16:41:01.004+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4c3ebd22 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:41:17.877+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@49fec3a5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:41:18.060+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2150230e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:50:43.978+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@78f68fe8 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:50:44.552+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2daa80b1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:50:54.928+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s13ms).
+2026-04-14T16:54:58.987+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m34s160ms).
+2026-04-14T16:55:03.486+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@d429e59 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:55:18.903+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@52fbe606 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:57:37.637+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m38s650ms).
+2026-04-14T16:57:41.108+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3204a88a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:57:46.864+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@40f41a13 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T16:57:47.538+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@169013fc (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T17:50:38.432+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@440922e6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T17:50:43.293+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m4s791ms).
+2026-04-14T17:50:58.633+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1d3e2e46 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:00:59.883+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s586ms).
+2026-04-14T18:01:17.737+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1dd3e2d9 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:01:28.308+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3506fad7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:10:50.749+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@20f7f223 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:11:17.669+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4e72ad6c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:11:17.671+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m47s779ms).
+2026-04-14T18:20:55.024+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@73d560d1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:21:04.265+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s594ms).
+2026-04-14T18:31:03.302+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6549f0e8 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:31:20.187+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@36696330 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:31:20.192+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7bfd65ed (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:31:20.193+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s21ms).
+2026-04-14T18:31:32.427+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@74ddb2a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:41:06.713+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s520ms).
+2026-04-14T18:41:25.653+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@634cf3ff (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:51:25.517+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1af321b6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:51:25.522+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s355ms).
+2026-04-14T18:51:43.014+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@66dcae95 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:51:53.018+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@672ecc15 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T18:51:53.019+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5d664570 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:01:42.078+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s432ms).
+2026-04-14T19:01:59.639+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@24b11f0b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:11:27.370+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m45s292ms).
+2026-04-14T19:12:01.779+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@413dbdb (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:12:07.973+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@371e881 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:21:25.034+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@78e9a8cc (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:21:26.003+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1dde15f7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:21:47.057+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m45s278ms).
+2026-04-14T19:31:32.028+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1167d32d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:31:33.592+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s535ms).
+2026-04-14T19:41:47.708+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@cc2b897 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:41:57.716+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4e0f2cf8 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:41:57.717+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2872b0a3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:41:57.717+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m53s579ms).
+2026-04-14T19:42:08.255+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3a140c25 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:51:54.740+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@51fa0b3b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T19:51:54.742+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m57s25ms).
+2026-04-14T20:02:09.967+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@765f0288 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:02:12.116+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m46s989ms).
+2026-04-14T20:02:17.153+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@261c4f38 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:02:24.137+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@46f7bd1e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:11:53.026+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@54e729db (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:11:57.488+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m45s372ms).
+2026-04-14T20:12:25.475+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@728291d7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:22:13.873+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m45s933ms).
+2026-04-14T20:22:40.837+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@39ad6135 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:32:06.255+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@608b3298 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:32:06.256+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m52s383ms).
+2026-04-14T20:32:06.257+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@21c704f7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:32:22.849+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1861fda5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:32:50.285+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7964775f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:47:08.404+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m31s511ms).
+2026-04-14T20:47:37.397+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7786614b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:47:41.772+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7cf3a234 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:47:48.326+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@75c66576 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:47:51.630+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@28d93110 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T20:57:28.749+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s879ms).
+2026-04-14T20:58:06.119+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@495ad43d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:07:56.194+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m50s71ms).
+2026-04-14T21:17:51.545+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@297dd871 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:18:01.573+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@36451d64 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:18:01.597+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@505e4dc9 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:18:01.599+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m5s406ms).
+2026-04-14T21:18:01.607+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@2eeb7e7f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:18:24.164+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@30dbf8fb (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:28:20.860+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s489ms).
+2026-04-14T21:38:21.756+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@38cc26ba (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:38:21.861+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m999ms).
+2026-04-14T21:38:50.749+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@22d29a25 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:39:00.756+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@11c7af6a (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:39:00.758+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6769b2cb (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:39:02.763+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1232e9e5 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:48:49.961+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m49s201ms).
+2026-04-14T21:58:42.477+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m52s201ms).
+2026-04-14T21:58:59.781+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3e22a836 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:59:16.550+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@25510d65 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:59:21.093+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@b61dad0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T21:59:23.272+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@24873b21 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:08:55.293+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@99030f1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:09:01.841+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m49s349ms).
+2026-04-14T22:19:23.071+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s822ms).
+2026-04-14T22:19:41.399+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6149abd0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:19:51.771+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@74957a33 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:19:54.773+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@663d1e3d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:29:33.397+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4c4a4d83 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:29:33.527+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6870313c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:29:43.221+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m49s337ms).
+2026-04-14T22:39:33.475+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m49s808ms).
+2026-04-14T22:40:08.280+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@66b216f9 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:40:19.112+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@64511b09 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:49:47.710+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7bb2e5f1 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:49:54.481+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s541ms).
+2026-04-14T22:50:04.833+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3c39de9e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T22:50:22.883+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@54765ba4 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:00:13.978+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m49s474ms).
+2026-04-14T23:00:43.474+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@16d372ae (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:10:18.346+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@757da889 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:10:34.819+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@78b6e933 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:10:35.859+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m49s631ms).
+2026-04-14T23:10:55.476+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@70e6391e (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:20:27.880+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@272a6340 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:20:27.907+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m52s44ms).
+2026-04-14T23:21:16.396+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@313e3702 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:30:42.874+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@7a5f813c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:30:49.385+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m49s548ms).
+2026-04-14T23:31:14.097+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4440be2b (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:31:24.140+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@1245a503 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:41:13.535+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@677be1a6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:41:13.543+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m54s149ms).
+2026-04-14T23:41:34.536+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6002c531 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:51:07.396+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m53s814ms).
+2026-04-14T23:51:31.499+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@23a911f2 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:51:44.569+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@a0879a2 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-14T23:51:54.637+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@472bef18 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-15T00:03:54.950+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m17s79ms).
+2026-04-15T00:03:59.775+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5a24bea7 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-15T00:14:00.794+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@5cf83d50 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-15T00:14:13.768+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m48s717ms).
+2026-04-15T05:38:12.330+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@702d905f (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-15T05:38:22.700+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@33801946 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-15T05:38:22.701+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5h24m8s933ms).
+2026-04-15T05:38:22.709+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@3e95ddfd (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-15T07:49:07.038+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@6d52ada6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
+2026-04-15T07:49:07.081+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h10m44s380ms).
+2026-04-15T07:49:25.690+08:00  WARN 10749 --- [l-1:housekeeper] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Failed to validate connection org.postgresql.jdbc.PgConnection@4cebf4d6 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
