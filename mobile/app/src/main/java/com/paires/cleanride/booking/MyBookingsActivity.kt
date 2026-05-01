@@ -115,7 +115,17 @@ class MyBookingsActivity : AppCompatActivity() {
                         tvEmpty.visibility = View.VISIBLE
                     } else {
                         tvEmpty.visibility = View.GONE
-                        bookingAdapter.submitList(bookings.reversed()) // Newest first
+                        
+                        val sortedBookings = bookings.sortedWith(compareBy<BookingItem> {
+                            when (it.status.uppercase()) {
+                                "CONFIRMED" -> 1 // Ongoing
+                                "COMPLETED" -> 2
+                                "CANCELLED" -> 3
+                                else -> 4
+                            }
+                        }.thenByDescending { it.date }.thenByDescending { it.time })
+                        
+                        bookingAdapter.submitList(sortedBookings)
                     }
                 } else {
                     Toast.makeText(this@MyBookingsActivity, "Failed to load bookings", Toast.LENGTH_SHORT).show()
