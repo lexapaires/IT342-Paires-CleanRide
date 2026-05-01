@@ -41,5 +41,10 @@
             android:exported="false"
             android:label="Book a Slot" />
 
+        <activity
+            android:name=".booking.MyBookingsActivity"
+            android:exported="false"
+            android:label="My Garage" />
+
     </application>
 </manifest>

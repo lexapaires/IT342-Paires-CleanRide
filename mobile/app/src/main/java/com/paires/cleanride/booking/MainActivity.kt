@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -86,6 +87,14 @@ class MainActivity : AppCompatActivity() {
 
         rvTimeSlots.layoutManager = LinearLayoutManager(this)
         rvTimeSlots.adapter = slotAdapter
+
+        val navGarage = findViewById<LinearLayout>(R.id.navGarage)
+        navGarage.setOnClickListener {
+            val intent = android.content.Intent(this, MyBookingsActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+            finish()
+        }
 
         setupDates()
 
