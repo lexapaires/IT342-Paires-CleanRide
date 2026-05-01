@@ -1,6 +1,7 @@
 package com.paires.cleanride.booking
 
 import com.paires.cleanride.R
+import android.content.Intent
 import android.graphics.Color
 import android.content.res.ColorStateList
 import android.os.Bundle
