@@ -1,4 +1,6 @@
-package com.paires.cleanride.booking
+import os
+
+content = """package com.paires.cleanride.booking
 
 import com.paires.cleanride.R
 import android.graphics.Color
@@ -352,3 +354,7 @@ class TimeSlotAdapter(private val onSlotSelected: (SlotItem) -> Unit) : Recycler
         )
     }
 }
+"""
+
+with open("mobile/app/src/main/java/com/paires/cleanride/booking/MainActivity.kt", "w") as f:
+    f.write(content)

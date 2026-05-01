@@ -1,59 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/clSlotContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     android:background="@drawable/bg_slot_item"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <ImageView
-        android:id="@+id/ivIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/bg_date_item"
-        android:padding="8dp"
-        android:src="@drawable/ic_clock"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTimeRange"
-        android:layout_width="0dp"
+    <!-- Header Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="08:00 AM - 09:30 AM"
-        android:textColor="@color/text_slate_900"
-        android:textSize="16sp"
-        android:fontFamily="sans-serif-black"
-        app:layout_constraintEnd_toStartOf="@id/ivChevron"
-        app:layout_constraintStart_toEndOf="@id/ivIcon"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        android:gravity="top|center_vertical"
+        android:layout_marginBottom="4dp">
 
+        <TextView
+            android:id="@+id/tvTimeRange"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="08:00 AM"
+            android:textColor="#0f172a"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_badge"
+            android:text="OPEN"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textAllCaps="true" />
+    </LinearLayout>
+
+    <!-- Label Row -->
     <TextView
-        android:id="@+id/tvAvailability"
-        android:layout_width="0dp"
+        android:id="@+id/tvSlotLabel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:text="4 Bays Available"
-        android:textColor="@color/primary_blue_600"
-        android:textSize="13sp"
-        android:fontFamily="sans-serif-medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivIcon"
-        app:layout_constraintTop_toBottomOf="@id/tvTimeRange" />
+        android:layout_marginBottom="20dp"
+        android:text="Morning Shift Start"
+        android:textColor="#94a3b8"
+        android:textSize="13sp" />
 
-    <ImageView
-        android:id="@+id/ivChevron"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_chevron_right"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Occupancy Info Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvOccupancyLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Bay Occupancy"
+            android:textColor="#64748b"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAvailability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5/5 Available"
+            android:textColor="#0f172a"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Progress Segments Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/segment1"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_segment" />
+        
+        <View
+            android:id="@+id/segment2"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_segment" />
+
+        <View
+            android:id="@+id/segment3"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_segment" />
+
+        <View
+            android:id="@+id/segment4"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_segment" />
+
+        <View
+            android:id="@+id/segment5"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_segment" />
+    </LinearLayout>
+
+</LinearLayout>
